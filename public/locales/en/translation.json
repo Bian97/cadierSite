@@ -1,0 +1,12 @@
+{    
+  "formularioLoginTextos": {
+    "entrarTitulo": "Sign In",
+    "atendente": "Attendant",      
+    "entrar": "Login",
+    "entrarSemConta": "Sign In without account",
+    "matriculaAtendente": "Attendant Registration",
+    "cpf":"Document",
+    "numeroAtendente": "Attendant ID",
+    "numeroRol": "User Registration"
+  }
+}
