@@ -4,9 +4,10 @@
     "atendente": "Attendant",      
     "entrar": "Login",
     "entrarSemConta": "Sign In without account",
-    "matriculaAtendente": "Attendant Registration",
     "cpf":"Document",
-    "numeroAtendente": "Attendant ID",
-    "numeroRol": "User Registration"
+    "numeroAtendente": "Attendant Code",
+    "numeroRol": "User Registration Code",
+    "erroLoginInvalido": "Invalid Document or Code!",
+    "erroLogin": "Internal Error! Please, wait or contact the administrators!"
   }
 }

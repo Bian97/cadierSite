@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userReducer from "./reducers/userReducer";
+import userReducer from "./reducers/UserReducer";
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 

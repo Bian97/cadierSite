@@ -1,0 +1,1 @@
+export const URLAPI = "https://localhost:7095/";

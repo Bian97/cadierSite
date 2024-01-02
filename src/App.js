@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-//import { store } from "./store";
 import Login from "./components/Login";
 
 const App = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const user = useSelector((state) => state.user);
 
-  if (!isLoggedIn) 
+  if (!user.estaLogado)
   {
     return <Login />;
   }
@@ -20,7 +19,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>App</h1>    
+      <h1>{user.documento}</h1>    
     </div>
   );
 };

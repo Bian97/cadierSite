@@ -4,9 +4,10 @@
     "atendente": "Atendente",      
     "entrar": "Entrar",
     "entrarSemConta": "Entrar sem Conta",
-    "matriculaAtendente": "Matrícula do Atendente",
     "cpf":"CPF",
     "numeroAtendente": "Número do Atendente",
-    "numeroRol": "Número do Rol"
+    "numeroRol": "Número do Rol",
+    "erroLoginInvalido": "CPF ou Número de Identificação inválidos!",
+    "erroLogin": "Erro Interno! Por favor, aguarde ou contate os administradores!"
   }
 }

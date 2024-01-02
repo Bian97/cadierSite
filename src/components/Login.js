@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { LOGIN, LOGOUT } from "../actions/UserActions";
+import { loginUser } from "../actions/UserActions";
 import "../css/Login.css"
 import { useTranslation } from 'react-i18next';
-// import brazilFlag from "../images/brazil.svg";
-// import usaFlag from "../images/usa.svg";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -16,25 +14,38 @@ const Login = () => {
     i18n.changeLanguage(lng);
   };
 
+
+  const entrarSemConta = async () => 
+  {
+    
+  };
+
   const dispatch = useDispatch();
 
-  const userPlaceholder = isAttendant ? t("formularioLoginTextos.matriculaAtendente") : t("formularioLoginTextos.cpf");
+  const userPlaceholder = isAttendant ? t("formularioLoginTextos.cpf") : t("formularioLoginTextos.cpf");
   const passwordPlaceholder = isAttendant ? t("formularioLoginTextos.numeroAtendente") : t("formularioLoginTextos.numeroRol");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    dispatch({
-      type: LOGIN,
-      payload: {
-        username,
-        password,
-      },
-    });
-
-    setUsername("");
-    setPassword("");
-  };    
+  
+    try 
+    {
+      await loginUser(username, password, isAttendant, dispatch);
+    } 
+    catch (error) 
+    {
+      document.querySelector(".erroLogin").style.display = "block";
+      switch(error.response.status)
+      {
+        case 401:          
+          document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLoginInvalido");
+          break;
+        case 400:
+          document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLogin");
+          break;
+      }
+    }
+  };  
 
   const handleAttendantChange = (e) => {
     setIsAttendant(e.target.checked);
@@ -47,11 +58,12 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <input
-              type="text"
+              type="number"
               className="form-control"
               placeholder={userPlaceholder}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
           <div className="form-group mt-2">
@@ -61,7 +73,14 @@ const Login = () => {
               placeholder={passwordPlaceholder}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
+              required
+            />            
+          </div>
+          <div className="form-group mt-2">
+            <label
+              className="erroLogin"
+            >
+            </label>
           </div>
           <div className="form-group mt-2">
             <label>
@@ -77,7 +96,7 @@ const Login = () => {
               <button className="btn btn-primary" type="submit">{t("formularioLoginTextos.entrar")}</button>
             </div>
             <div className="d-flex justify-content-center">
-              <button className="btn btn-secondary mt-2" type="button">{t("formularioLoginTextos.entrarSemConta")}</button>
+              <button className="btn btn-secondary mt-2" onClick={() => entrarSemConta()} type="button">{t("formularioLoginTextos.entrarSemConta")}</button>
             </div>
           </div>
           <div className="mt-2">

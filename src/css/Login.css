@@ -74,3 +74,10 @@
     background-size: 100%;
     margin-left: 5%;
   }
+
+  .erroLogin {
+    color: red;
+    display: none;
+    text-align: center;
+  }
+  
