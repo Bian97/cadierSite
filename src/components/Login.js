@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, startTransition } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../actions/UserActions";
+import { loginUser, loginSemContaUser } from "../actions/UserActions";
 import "../css/Login.css"
 import { useTranslation } from 'react-i18next';
 
@@ -9,41 +9,49 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isAttendant, setIsAttendant] = useState(false);
   const { t, i18n } = useTranslation();
+  
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
-
-  const entrarSemConta = async () => 
-  {
-    
-  };
-
-  const dispatch = useDispatch();
-
   const userPlaceholder = isAttendant ? t("formularioLoginTextos.cpf") : t("formularioLoginTextos.cpf");
   const passwordPlaceholder = isAttendant ? t("formularioLoginTextos.numeroAtendente") : t("formularioLoginTextos.numeroRol");
+
+  const dispatch = useDispatch();
+  const entrarSemConta = async () => 
+  {
+    startTransition(async () => {
+      await loginSemContaUser(dispatch); 
+    });   
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     try 
     {
-      await loginUser(username, password, isAttendant, dispatch);
+      startTransition(async () => {
+        await loginUser(username, password, isAttendant, dispatch);
+      });
     } 
     catch (error) 
     {
       document.querySelector(".erroLogin").style.display = "block";
-      switch(error.response.status)
+      if(error.response != null)
       {
-        case 401:          
-          document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLoginInvalido");
-          break;
-        case 400:
-          document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLogin");
-          break;
+        switch(error.response.status)
+        {
+          case 401:
+            document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLoginInvalido");
+            break;
+          case 400:
+            document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLogin");
+            break;
+        }        
       }
+      else
+          document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.servidorFora");    
     }
   };  
 
@@ -96,7 +104,7 @@ const Login = () => {
               <button className="btn btn-primary" type="submit">{t("formularioLoginTextos.entrar")}</button>
             </div>
             <div className="d-flex justify-content-center">
-              <button className="btn btn-secondary mt-2" onClick={() => entrarSemConta()} type="button">{t("formularioLoginTextos.entrarSemConta")}</button>
+              <button className="btn btn-secondary mt-2" onClick={ async() => entrarSemConta()} type="button">{t("formularioLoginTextos.entrarSemConta")}</button>
             </div>
           </div>
           <div className="mt-2">

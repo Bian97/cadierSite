@@ -8,6 +8,10 @@
     "numeroAtendente": "Attendant Code",
     "numeroRol": "User Registration Code",
     "erroLoginInvalido": "Invalid Document or Code!",
-    "erroLogin": "Internal Error! Please, wait or contact the administrators!"
+    "erroLogin": "Internal Error! Please, wait or contact the administrators!",
+    "servidorFora": "Error! Server is shutdown, try again later!"
+  },
+  "textosMenu": {
+    "logOut": "Log Out"
   }
 }

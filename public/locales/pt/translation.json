@@ -8,6 +8,10 @@
     "numeroAtendente": "Número do Atendente",
     "numeroRol": "Número do Rol",
     "erroLoginInvalido": "CPF ou Número de Identificação inválidos!",
-    "erroLogin": "Erro Interno! Por favor, aguarde ou contate os administradores!"
+    "erroLogin": "Erro Interno! Por favor, aguarde ou contate os administradores!",
+    "servidorFora": "Erro! Servidor está fora do ar, tente novamente mais tarde!"
+  },
+  "textosMenu": {
+    "sair": "Sair"
   }
 }

@@ -1,6 +1,6 @@
-import { LOGIN, LOGOUT } from "../actions/UserActions";
+import { LOGIN, LOGOUT, LOGINSEMCONTA } from "../actions/UserActions";
 
-const user = (state = { estaLogado: false, documento: "", numero: "", atendente: false, token: "" }, action) => {
+const user = (state = { estaLogado: false, documento: "", numero: "", atendente: false, token: "", possuiConta: false }, action) => {
   switch (action.type) {      
     case LOGIN:
       const { documento, numero, atendente, token } = action.payload;
@@ -9,12 +9,26 @@ const user = (state = { estaLogado: false, documento: "", numero: "", atendente:
         documento,
         numero,
         atendente,
-        token
+        token,
+        possuiConta: true
+      };
+    case LOGINSEMCONTA:
+      return {
+        estaLogado: true,
+        documento: "",
+        numero: "",
+        atendente: false,
+        token: "",
+        possuiConta: false
       };
     case LOGOUT:
       return {
         estaLogado: false,
-        username: "",
+        documento: "",
+        numero: "",
+        atendente: false,
+        token: "",
+        possuiConta: false
       };
     default:
       return state;
