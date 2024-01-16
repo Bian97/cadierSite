@@ -12,6 +12,26 @@
     "servidorFora": "Erro! Servidor está fora do ar, tente novamente mais tarde!"
   },
   "textosMenu": {
-    "sair": "Sair"
+    "sair": "Sair",
+    "home": "Início",
+    "filiados": "Filiados",
+    "calendario": "Calendário",
+    "apoiosocial": "Apoio Social",
+    "sobrenos": "Sobre Nós",
+    "doacoes": "Doações",
+    "faleconosco": "Fale Conosco",
+    "filiarpessoafisica": "Filiar Pessoa Física",
+    "filiarpessoajuridica": "Filiar Pessoa Jurídica",
+    "enviodocumentos": "Envio de Documentos",
+    "comunicarpagamento": "Comunicar Pagamento",
+    "downloads": "Downloads",
+    "departamentos": "Departamentos",
+    "loja": "Loja",
+    "secretaria": "Secretaria",
+    "controlefiliados": "Controle de Filiados",
+    "pedidosloja": "Pedidos da Loja",
+    "cadastrocalendario": "Cadastro de Calendário",
+    "expedicaodocumentos": "Expedição de Documentos",
+    "controlereunioes": "Controle de Reuniões"
   }
 }
