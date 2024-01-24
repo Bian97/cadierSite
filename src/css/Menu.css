@@ -4,7 +4,7 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
   background-color: #333;
 }
 

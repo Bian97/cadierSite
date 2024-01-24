@@ -7,10 +7,9 @@ import "../css/Menu.css";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Inicio from "../components/Inicio";
 
-// Criar componentes para cada "tela"
-// (mantive as abreviações para facilitar a visualização)
-const InicioScreen = () => <div>Inicio</div>;
+// Apagar constantes após criação de componentes e importação dos mesmos
 const FiliadosScreen = () => <div>Filiados</div>;
 const CalendarioScreen = () => <div>Calendario</div>;
 const ApoioSocialScreen = () => <div>ApoioSocial</div>;
@@ -44,7 +43,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
 
   // Mapear as "telas" para os componentes correspondentes
   const telas = {
-    Inicio: <InicioScreen />,
+    Inicio: <Inicio />,
     Filiados: <FiliadosScreen />,
     Calendario: <CalendarioScreen />,
     ApoioSocial: <ApoioSocialScreen />,
@@ -91,33 +90,37 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     (item) => item.role === "GERAL" || (isAuthenticated && item.role === "FILIADO" && !isAttendant) || (isAuthenticated && item.role === "ATENDENTE" && isAttendant)
   );
 
-  const handleMenuItemClick = (tela) => {
-    setCurrentScreen(telas[tela]);
+  const handleMenuItemClick = (tela, event) => {
+    event.preventDefault();
+    setCurrentScreen(() => telas[tela]);
   };
 
   return (
     <div>
       <ul>
         {filteredMenuItems.map((item) => (
-          <li key={item.label} onClick={() => handleMenuItemClick(item.label)}>
-            <a href="#">{t(`textosMenu.${item.label.toLowerCase()}`)}</a>
-          </li>
+          <li key={item.label} onClick={(event) => handleMenuItemClick(item.label, event)}>
+          <a href="#">{t(`textosMenu.${item.label.toLowerCase()}`)}</a>
+        </li>
         ))}
         <DropdownButton
             as={ButtonGroup}
             key={'Danger'}
             id={`dropdown-variants-Danger`}
             variant={'danger'}
-            title={t("textosMenu.perfil")}            
+            title={t("textosMenu.perfil")}
           >
-            <Dropdown.Item eventKey="1"><a className="dropdown-item" href="#">{t("textosMenu.editarConta")}</a></Dropdown.Item>            
+            <Dropdown.Item eventKey="1"><a className="dropdown-item" href="#">{t("textosMenu.editarConta")}</a></Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item eventKey="2"><button className="dropdown-item" type="button" onClick={async () => sairConta()}>{t("textosMenu.sair")}</button></Dropdown.Item>
           </DropdownButton>
       </ul>
 
-      {/* Renderizar a "tela" atual */}
-      {currentScreen}
+      {currentScreen && React.isValidElement(currentScreen) && (
+        <div>
+          {React.createElement(currentScreen.type)}
+        </div>
+      )}
     </div>
   );
 };

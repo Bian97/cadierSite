@@ -60,7 +60,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container background-image">      
+    <div className="login-container background-image">
       <div className="login-form">
         <h1>{t("formularioLoginTextos.entrarTitulo")}</h1>        
         <form onSubmit={handleSubmit}>
