@@ -4,7 +4,7 @@
     "atendente": "Atendente",      
     "entrar": "Entrar",
     "entrarSemConta": "Entrar sem Conta",
-    "cpf":"CPF",
+    "cpf":"Cpf",
     "numeroAtendente": "Número do Atendente",
     "numeroRol": "Número do Rol",
     "erroLoginInvalido": "CPF ou Número de Identificação inválidos!",
@@ -13,12 +13,11 @@
   },
   "textosMenu": {
     "sair": "Sair",
-    "home": "Início",
+    "inicio": "Início",
     "filiados": "Filiados",
     "calendario": "Calendário",
     "apoiosocial": "Apoio Social",
     "sobrenos": "Sobre Nós",
-    "doacoes": "Doações",
     "faleconosco": "Fale Conosco",
     "filiarpessoafisica": "Filiar Pessoa Física",
     "filiarpessoajuridica": "Filiar Pessoa Jurídica",
@@ -32,6 +31,8 @@
     "pedidosloja": "Pedidos da Loja",
     "cadastrocalendario": "Cadastro de Calendário",
     "expedicaodocumentos": "Expedição de Documentos",
-    "controlereunioes": "Controle de Reuniões"
+    "controlereunioes": "Controle de Reuniões",
+    "editarConta": "Editar Conta",
+    "perfil": "Perfil"
   }
 }

@@ -10,8 +10,29 @@
     "erroLoginInvalido": "Invalid Document or Code!",
     "erroLogin": "Internal Error! Please, wait or contact the administrators!",
     "servidorFora": "Error! Server is shutdown, try again later!"
-  },
+  },  
   "textosMenu": {
-    "logOut": "Log Out"
+    "sair": "Log Out",
+    "inicio": "Home",
+    "filiados": "Affiliates",
+    "calendario": "Calendar",
+    "apoiosocial": "Social Help",
+    "sobrenos": "About Us",
+    "faleconosco": "Contact Us",
+    "filiarpessoafisica": "Affiliate Individual",
+    "filiarpessoajuridica": "Affiliate Legal Entity",
+    "enviodocumentos": "Send Documents",
+    "comunicarpagamento": "Report Payment",
+    "downloads": "Downloads",
+    "departamentos": "Departments",
+    "loja": "Store",
+    "secretaria": "Secretary",
+    "controlefiliados": "Affiliate Control",
+    "pedidosloja": "Store Orders",
+    "cadastrocalendario": "Calendar Registration",
+    "expedicaodocumentos": "Document Expedition",
+    "controlereunioes": "Meets Control",
+    "editarConta": "Edit Profile",
+    "perfil": "Profile"
   }
 }

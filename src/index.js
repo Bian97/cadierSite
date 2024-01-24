@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store'; // Importa a store e persistor
+import { usePopper } from "react-popper"; 
 import 'bootstrap/dist/css/bootstrap.css';
 import './i18n';
 

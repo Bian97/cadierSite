@@ -3,15 +3,18 @@ import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { logOut } from "../actions/UserActions";
 import { persistor } from '../store';
+import "../css/Menu.css";
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 // Criar componentes para cada "tela"
 // (mantive as abreviações para facilitar a visualização)
-const HomeScreen = () => <div>Home</div>;
+const InicioScreen = () => <div>Inicio</div>;
 const FiliadosScreen = () => <div>Filiados</div>;
 const CalendarioScreen = () => <div>Calendario</div>;
 const ApoioSocialScreen = () => <div>ApoioSocial</div>;
 const SobreNosScreen = () => <div>SobreNos</div>;
-const DoacoesScreen = () => <div>Doacoes</div>;
 const FaleConoscoScreen = () => <div>FaleConosco</div>;
 const FiliarPessoaFisicaScreen = () => <div>FiliarPessoaFisica</div>;
 const FiliarPessoaJuridicaScreen = () => <div>FiliarPessoaJuridica</div>;
@@ -41,12 +44,11 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
 
   // Mapear as "telas" para os componentes correspondentes
   const telas = {
-    Home: <HomeScreen />,
+    Inicio: <InicioScreen />,
     Filiados: <FiliadosScreen />,
     Calendario: <CalendarioScreen />,
     ApoioSocial: <ApoioSocialScreen />,
     SobreNos: <SobreNosScreen />,
-    Doacoes: <DoacoesScreen />,
     FaleConosco: <FaleConoscoScreen />,
     FiliarPessoaFisica: <FiliarPessoaFisicaScreen />,
     FiliarPessoaJuridica: <FiliarPessoaJuridicaScreen />,
@@ -64,12 +66,11 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
   };
 
   const menuItems = [
-    { label: "Home", role: "GERAL" },
+    { label: "Inicio", role: "GERAL" },
     { label: "Filiados", role: "GERAL" },
     { label: "Calendario", role: "GERAL" },
     { label: "ApoioSocial", role: "GERAL" },
     { label: "SobreNos", role: "GERAL" },
-    { label: "Doacoes", role: "GERAL" },
     { label: "FaleConosco", role: "GERAL" },
     { label: "FiliarPessoaFisica", role: "GERAL" },
     { label: "FiliarPessoaJuridica", role: "FILIADO" },
@@ -99,18 +100,20 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
       <ul>
         {filteredMenuItems.map((item) => (
           <li key={item.label} onClick={() => handleMenuItemClick(item.label)}>
-            {t(`textosMenu.${item.label.toLowerCase()}`)}
+            <a href="#">{t(`textosMenu.${item.label.toLowerCase()}`)}</a>
           </li>
         ))}
-        <li>
-          <button
-            className="btn btn-secondary mt-2"
-            onClick={async () => sairConta()}
-            type="button"
+        <DropdownButton
+            as={ButtonGroup}
+            key={'Danger'}
+            id={`dropdown-variants-Danger`}
+            variant={'danger'}
+            title={t("textosMenu.perfil")}            
           >
-            {isAuthenticated ? t("textosMenu.sair") : t("formularioLoginTextos.entrar")}
-          </button>
-        </li>
+            <Dropdown.Item eventKey="1"><a className="dropdown-item" href="#">{t("textosMenu.editarConta")}</a></Dropdown.Item>            
+            <Dropdown.Divider />
+            <Dropdown.Item eventKey="2"><button className="dropdown-item" type="button" onClick={async () => sairConta()}>{t("textosMenu.sair")}</button></Dropdown.Item>
+          </DropdownButton>
       </ul>
 
       {/* Renderizar a "tela" atual */}
