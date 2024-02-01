@@ -6,6 +6,7 @@ ul {
   margin: 0;
   overflow: visible;
   background-color: #333;
+  padding-bottom: 0.6%;
 }
 
 li {
@@ -39,10 +40,11 @@ li a:hover {
 /* Adicione ou ajuste no arquivo Menu.css */
 
 /* Dropdown container */
-/* .dropdown {
+.dropdown {
   position: relative;
   display: inline-block;
-} */
+  margin-top: 0.3%;
+}
 
 /* Dropdown button */
 /* .dropdown .dropbtn {

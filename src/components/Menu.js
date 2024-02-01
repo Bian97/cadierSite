@@ -8,6 +8,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Inicio from "../components/Inicio";
+import ControleFiliados from "../components/ControleFiliados";
 
 // Apagar constantes após criação de componentes e importação dos mesmos
 const FiliadosScreen = () => <div>Filiados</div>;
@@ -23,7 +24,6 @@ const DownloadsScreen = () => <div>Downloads</div>;
 const DepartamentosScreen = () => <div>Departamentos</div>;
 const LojaScreen = () => <div>Loja</div>;
 const SecretariaScreen = () => <div>Secretaria</div>;
-const ControleFiliadosScreen = () => <div>ControleFiliados</div>;
 const PedidosLojaScreen = () => <div>PedidosLoja</div>;
 const CadastroCalendarioScreen = () => <div>CadastroCalendario</div>;
 const ExpedicaoDocumentosScreen = () => <div>ExpedicaoDocumentos</div>;
@@ -57,7 +57,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     Departamentos: <DepartamentosScreen />,
     Loja: <LojaScreen />,
     Secretaria: <SecretariaScreen />,
-    ControleFiliados: <ControleFiliadosScreen />,
+    ControleFiliados: <ControleFiliados />,
     PedidosLoja: <PedidosLojaScreen />,
     CadastroCalendario: <CadastroCalendarioScreen />,
     ExpedicaoDocumentos: <ExpedicaoDocumentosScreen />,

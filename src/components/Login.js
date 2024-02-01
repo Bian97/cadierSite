@@ -28,31 +28,32 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    try 
-    {
-      startTransition(async () => {
-        await loginUser(username, password, isAttendant, dispatch);
-      });
-    } 
-    catch (error) 
-    {
-      document.querySelector(".erroLogin").style.display = "block";
-      if(error.response != null)
+    startTransition(async () => {
+      try 
       {
-        switch(error.response.status)
+        
+          await loginUser(username, password, isAttendant, dispatch);
+        
+      } 
+      catch (error) 
+      {
+        document.querySelector(".erroLogin").style.display = "block";
+        if(error.response != null)
         {
-          case 401:
-            document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLoginInvalido");
-            break;
-          case 400:
-            document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLogin");
-            break;
-        }        
+          switch(error.response.status)
+          {
+            case 401:
+              document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLoginInvalido");
+              break;
+            case 400:
+              document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.erroLogin");
+              break;
+          }        
+        }
+        else
+            document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.servidorFora");    
       }
-      else
-          document.querySelector(".erroLogin").textContent = t("formularioLoginTextos.servidorFora");    
-    }
+    });
   };  
 
   const handleAttendantChange = (e) => {

@@ -44,7 +44,7 @@ export const logOut = (dispatch) => {
       //resolve({ estaLogado: true, possuiConta: false });
     } catch (error) 
     {
-      console.error("Erro ao fazer login:", error);
+      console.error("Erro ao fazer logout:", error);
       reject(error);
     }
   });
