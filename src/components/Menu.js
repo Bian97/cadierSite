@@ -27,7 +27,6 @@ const SecretariaScreen = () => <div>Secretaria</div>;
 const PedidosLojaScreen = () => <div>PedidosLoja</div>;
 const CadastroCalendarioScreen = () => <div>CadastroCalendario</div>;
 const ExpedicaoDocumentosScreen = () => <div>ExpedicaoDocumentos</div>;
-const ControleReunioesScreen = () => <div>ControleReunioes</div>;
 
 const Menu = ({ isAuthenticated, isAttendant }) => {
   const { t, i18n } = useTranslation();
@@ -61,7 +60,6 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     PedidosLoja: <PedidosLojaScreen />,
     CadastroCalendario: <CadastroCalendarioScreen />,
     ExpedicaoDocumentos: <ExpedicaoDocumentosScreen />,
-    ControleReunioes: <ControleReunioesScreen />,
   };
 
   const menuItems = [
@@ -82,8 +80,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     { label: "ControleFiliados", role: "ATENDENTE" },
     { label: "PedidosLoja", role: "ATENDENTE" },
     { label: "CadastroCalendario", role: "ATENDENTE" },
-    { label: "ExpedicaoDocumentos", role: "ATENDENTE" },
-    { label: "ControleReunioes", role: "ATENDENTE" },
+    { label: "ExpedicaoDocumentos", role: "ATENDENTE" }
   ];
 
   const filteredMenuItems = menuItems.filter(
@@ -97,30 +94,33 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
 
   return (
     <div>
-      <ul>
-        {filteredMenuItems.map((item) => (
-          <li key={item.label} onClick={(event) => handleMenuItemClick(item.label, event)}>
-          <a href="#">{t(`textosMenu.${item.label.toLowerCase()}`)}</a>
-        </li>
-        ))}
-        <DropdownButton
-            as={ButtonGroup}
-            key={'Danger'}
-            id={`dropdown-variants-Danger`}
-            variant={'danger'}
-            title={t("textosMenu.perfil")}
-          >
-            <Dropdown.Item eventKey="1"><a className="dropdown-item" href="#">{t("textosMenu.editarConta")}</a></Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item eventKey="2"><button className="dropdown-item" type="button" onClick={async () => sairConta()}>{t("textosMenu.sair")}</button></Dropdown.Item>
-          </DropdownButton>
-      </ul>
-
-      {currentScreen && React.isValidElement(currentScreen) && (
-        <div>
-          {React.createElement(currentScreen.type)}
-        </div>
-      )}
+      <div id="header">
+        <ul className="navBarUl">
+          {filteredMenuItems.map((item) => (
+            <li key={item.label} onClick={(event) => handleMenuItemClick(item.label, event)}>
+            <a href="#">{t(`textosMenu.${item.label.toLowerCase()}`)}</a>
+          </li>
+          ))}
+          <DropdownButton
+              as={ButtonGroup}
+              key={'Danger'}
+              id={`dropdown-variants-Danger`}
+              variant={'danger'}
+              title={t("textosMenu.perfil")}
+            >
+              <Dropdown.Item eventKey="1"><a className="dropdown-item" href="#">{t("textosMenu.editarConta")}</a></Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item eventKey="2"><button className="dropdown-item" type="button" onClick={async () => sairConta()}>{t("textosMenu.sair")}</button></Dropdown.Item>
+            </DropdownButton>
+        </ul>      
+      </div>
+      <div id="body">
+        {currentScreen && React.isValidElement(currentScreen) && (
+          <div>
+            {React.createElement(currentScreen.type)}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

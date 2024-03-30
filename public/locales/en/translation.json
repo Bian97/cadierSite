@@ -1,4 +1,31 @@
 {    
+  "geral": {
+    "pais": "Country",
+    "cidade": "City",
+    "estado": "State",
+    "cargo": "Function",
+    "documento": "Document",
+    "selecionarCargo": "Select Function",
+    "condicao": "Condition",
+    "selecionarCondicao": "Selecionar Condição",
+    "filiado": "Affiliate",
+    "pesquisar": "Search",
+    "nome": "Name",
+    "telefone": "Phone",
+    "detalhes": "Details",
+    "endereco": "Address",
+    "ativo": "Active",
+    "inativo": "Inactive",
+    "processoInterno": "Internal Process",
+    "desligado": "Disconnected",
+    "pendencia": "Pendency",
+    "excluido": "Excluded",
+    "falecido": "Deceased",
+    "labelSemLinhas": "There is no rows to display!",
+    "linhasPorPagina": "Rows per page:",
+    "paginacaoDe": "Of",
+    "paginacaoPagina": "Page"
+  },
   "formularioLoginTextos": {
     "entrarTitulo": "Sign In",
     "atendente": "Attendant",      
@@ -34,5 +61,10 @@
     "controlereunioes": "Meets Control",
     "editarConta": "Edit Profile",
     "perfil": "Profile"
+  },
+  "textosControleFiliados": {
+    "numeroRol": "User Registration Code",    
+    "numeroRolIgreja": "Church Registration Code",
+    "nomeIgreja": "Church Name"
   }
 }

@@ -1,4 +1,31 @@
-{    
+{
+  "geral": {
+    "pais": "País",
+    "cidade": "Cidade",
+    "estado": "Estado",
+    "cargo": "Cargo",
+    "documento": "Documento",
+    "selecionarCargo": "Selecionar Cargo",
+    "condicao": "Condição",
+    "selecionarCondicao": "Selecionar Condição",
+    "filiado": "Filiado",
+    "pesquisar": "Pesquisar",
+    "nome": "Nome",
+    "telefone": "Telefone",
+    "detalhes": "Detalhes",
+    "endereco": "Endereço",
+    "ativo": "Ativo",
+    "inativo": "Inativo",
+    "processoInterno": "Processo Interno",
+    "desligado": "Desligado",
+    "pendencia": "Pendência",
+    "excluido": "Excluído",
+    "falecido": "Falecido",
+    "labelSemLinhas": "Não há linhas para mostrar!",
+    "linhasPorPagina": "Linhas por página:",
+    "paginacaoDe": "De",
+    "paginacaoPagina": "Página"
+  },
   "formularioLoginTextos": {
     "entrarTitulo": "Entrar",
     "atendente": "Atendente",      
@@ -34,5 +61,10 @@
     "controlereunioes": "Controle de Reuniões",
     "editarConta": "Editar Conta",
     "perfil": "Perfil"
+  },
+  "textosControleFiliados": {
+    "numeroRol": "Número do Rol",
+    "numeroRolIgreja": "Número do Rol da Igreja",
+    "nomeIgreja": "Nome da Igreja"
   }
 }
