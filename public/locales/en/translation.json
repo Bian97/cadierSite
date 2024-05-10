@@ -24,7 +24,9 @@
     "labelSemLinhas": "There is no rows to display!",
     "linhasPorPagina": "Rows per page:",
     "paginacaoDe": "Of",
-    "paginacaoPagina": "Page"
+    "paginacaoPagina": "Page",
+    "true": "Yes",
+    "false": "No"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Sign In",

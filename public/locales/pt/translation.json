@@ -24,7 +24,9 @@
     "labelSemLinhas": "Não há linhas para mostrar!",
     "linhasPorPagina": "Linhas por página:",
     "paginacaoDe": "De",
-    "paginacaoPagina": "Página"
+    "paginacaoPagina": "Página",
+    "true": "Sim",
+    "false": "Não"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Entrar",
