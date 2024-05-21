@@ -11,7 +11,6 @@ export const getFiliados = async (filters, token) => {
     };
 
     const response = await axios.get(`${URLAPI}PessoaFisica/GetPFisicas`, config);
-    console.log('Dados recebidos:', response.data);
     return response.data;
   } catch (error) {
     console.error('Erro ao buscar dados:', error);

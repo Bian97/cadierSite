@@ -8,8 +8,12 @@ import { store, persistor } from './store'; // Importa a store e persistor
 import { usePopper } from "react-popper"; 
 import 'bootstrap/dist/css/bootstrap.css';
 import './i18n';
+import axiosInterceptors from './AxiosInterceptor'
+
 
 const root = createRoot(document.getElementById('root'));
+
+axiosInterceptors(store);
 
 root.render(
   <Provider store={store}>

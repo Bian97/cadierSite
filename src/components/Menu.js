@@ -9,6 +9,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Inicio from "../components/Inicio";
 import ControleFiliados from "../components/ControleFiliados";
+import { useNavigate } from 'react-router-dom';
 
 // Apagar constantes após criação de componentes e importação dos mesmos
 const FiliadosScreen = () => <div>Filiados</div>;
@@ -31,12 +32,14 @@ const ExpedicaoDocumentosScreen = () => <div>ExpedicaoDocumentos</div>;
 const Menu = ({ isAuthenticated, isAttendant }) => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [currentScreen, setCurrentScreen] = useState(null);
 
   const sairConta = async () => {
     startTransition(async () => {
       persistor.purge();
-      await logOut(dispatch);
+      await dispatch(logOut);
+      navigate(`/login`);
     });
   };
 

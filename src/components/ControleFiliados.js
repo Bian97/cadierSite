@@ -9,11 +9,13 @@ import { selectRow, pagination } from './util/DatatableHelper';
 import { getFiliados } from "../actions/ControleFiliadosActions";
 import { logOut } from "../actions/UserActions";
 import { persistor } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 
 const ControleFiliados = ({ token }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
     numeroRol: "",
     documento: "",
@@ -69,8 +71,7 @@ const ControleFiliados = ({ token }) => {
   ];
 
   const handleVerFicha = (row) => {
-    // Lógica para mostrar a ficha do filiado
-    console.log("Ver ficha de:", row.nome);
+    navigate(`/fichaDeFiliado/${row.idPFisica}`);
   };
 
   const handleVerPedidos = (row) => {
@@ -108,12 +109,13 @@ const ControleFiliados = ({ token }) => {
           {
             switch(error.response.status)
             {
-              case 401:
-                startTransition(async () => {
-                  persistor.purge();
-                  await logOut(dispatch);
-                });
-                break;
+              // case 401:
+              //   startTransition(async () => {
+              //     persistor.purge();
+              //     await dispatch(logOut);
+              //     navigate(`/login`);
+              //   });
+              //   break;
               default:
                 console.log(error);
                 break;

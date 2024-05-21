@@ -3,13 +3,14 @@ import { useDispatch } from "react-redux";
 import { loginUser, loginSemContaUser } from "../actions/UserActions";
 import "../css/Login.css"
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isAttendant, setIsAttendant] = useState(false);
   const { t, i18n } = useTranslation();
-  
+  const navigate = useNavigate();
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -23,6 +24,7 @@ const Login = () => {
   {
     startTransition(async () => {
       await loginSemContaUser(dispatch); 
+      navigate(`/inicio`);
     });   
   };
 
@@ -30,10 +32,9 @@ const Login = () => {
     e.preventDefault();
     startTransition(async () => {
       try 
-      {
-        
+      {        
           await loginUser(username, password, isAttendant, dispatch);
-        
+          navigate(`/inicio`);
       } 
       catch (error) 
       {

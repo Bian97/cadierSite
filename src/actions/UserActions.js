@@ -37,15 +37,6 @@ export const loginSemContaUser = (dispatch) => {
   });
 };
 
-export const logOut = (dispatch) => {
-  return new Promise(async (resolve, reject) => {
-    try {      
-      dispatch({ type: LOGOUT });
-      //resolve({ estaLogado: true, possuiConta: false });
-    } catch (error) 
-    {
-      console.error("Erro ao fazer logout:", error);
-      reject(error);
-    }
-  });
+export const logOut = () => async (dispatch) => {
+  dispatch({ type: LOGOUT });
 };
