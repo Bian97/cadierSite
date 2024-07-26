@@ -1,6 +1,7 @@
 import { combineReducers, configureStore, applyMiddleware } from "@reduxjs/toolkit";
 import userReducer from "./reducers/UserReducer";
 import menuReducer from "./reducers/MenuReducer";
+import filiadoReducer from './reducers/ControleFiliadoReducer';
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -22,7 +23,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
-  menu: menuReducer
+  menu: menuReducer,
+  filiado: filiadoReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

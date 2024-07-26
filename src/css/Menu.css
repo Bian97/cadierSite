@@ -61,6 +61,18 @@ li a:hover {
   overflow: visible !important;
   display: block !important;
 }
+
+/* Adicione essas regras no Menu.css para ajustar o estilo do Select do MUI */
+.MuiMenuItem-root {
+  float: none !important;
+  display: block !important; /* Garante que o item do menu seja exibido como um bloco */
+}
+
+.MuiMenu-paper {
+  display: block !important; /* Garante que o menu seja exibido como um bloco */
+}
+
+
 /* Dropdown button */
 /* .dropdown .dropbtn {
   font-size: 16px;
