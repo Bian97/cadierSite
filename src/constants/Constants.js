@@ -1,20 +1,30 @@
+import { useTranslation } from 'react-i18next';
+
 export const URLAPI = "https://localhost:7095/";
-export const CARGOS = [
-    { id: 0, nome: "Membro" },
-    { id: 1, nome: "Auxiliar" },
-    { id: 2, nome: "Obreiro" },
-    { id: 3, nome: "Diácono" },
-    { id: 4, nome: "Presbítero" },
-    { id: 5, nome: "Missionário" },
-    { id: 6, nome: "Evangelista" },
-    { id: 7, nome: "Pastor" }
-];
-export const CONDICAO = [
-    { id: 0, nome: "Ativo" },
-    { id: 1, nome: "Inativo" },
-    { id: 2, nome: "Processo Interno" },
-    { id: 3, nome: "Desligado" },
-    { id: 4, nome: "Pendência" },
-    { id: 5, nome: "Excluído" },
-    { id: 6, nome: "Falecido" }
-];
+
+export const useCargos = () => {
+  const { t } = useTranslation();
+  return [
+    { id: 0, nome: t('cargos.0') },
+    { id: 1, nome: t('cargos.1') },
+    { id: 2, nome: t('cargos.2') },
+    { id: 3, nome: t('cargos.3') },
+    { id: 4, nome: t('cargos.4') },
+    { id: 5, nome: t('cargos.5') },
+    { id: 6, nome: t('cargos.6') },
+    { id: 7, nome: t('cargos.7') }
+  ];
+};
+
+export const useCondicao = () => {
+  const { t } = useTranslation();
+  return [
+    { id: 0, nome: t('condicoes.0') },
+    { id: 1, nome: t('condicoes.1') },
+    { id: 2, nome: t('condicoes.2') },
+    { id: 3, nome: t('condicoes.3') },
+    { id: 4, nome: t('condicoes.4') },
+    { id: 5, nome: t('condicoes.5') },
+    { id: 6, nome: t('condicoes.6') }
+  ];
+};

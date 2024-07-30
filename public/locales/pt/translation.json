@@ -1,7 +1,9 @@
 {
   "geral": {
+    "cep": "Zip Code",
     "pais": "País",
     "cidade": "Cidade",
+    "bairro": "Bairro",
     "estado": "Estado",
     "cargo": "Cargo",
     "documento": "Documento",
@@ -26,7 +28,12 @@
     "paginacaoDe": "De",
     "paginacaoPagina": "Página",
     "true": "Sim",
-    "false": "Não"
+    "false": "Não",
+    "sexo": "Sexo",
+    "masculino": "Masculino",
+    "feminino": "Feminino",
+    "informacoesBasicas": "Informações Básicas",
+    "voltar": "Voltar"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Entrar",
@@ -67,6 +74,41 @@
   "textosControleFiliados": {
     "numeroRol": "Número do Rol",
     "numeroRolIgreja": "Número do Rol da Igreja",
-    "nomeIgreja": "Nome da Igreja"
-  }
+    "nomeIgreja": "Nome da Igreja",
+    "verFicha": "Ver Ficha",
+    "verPedidos": "Ver Pedidos",
+    "verPessoaJuridica": "Ver Pessoa Jurídica"
+  },
+  "cargos": {
+    "0": "Membro",
+    "1": "Auxiliar",
+    "2": "Obreiro",
+    "3": "Diácono",
+    "4": "Presbítero",
+    "5": "Missionário",
+    "6": "Evangelista",
+    "7": "Pastor"
+  },
+  "condicoes": {
+    "0": "Ativo",
+    "1": "Inativo",
+    "2": "Processo Interno",
+    "3": "Desligado",
+    "4": "Pendência",
+    "5": "Excluído",
+    "6": "Falecido"
+  },
+  "textosFichaFiliado": 
+  {
+    "fichaFiliado": "Ficha de Filiado",
+    "profissao": "Profissão",
+    "carregando": "Carregando...",
+    "dataNascimento": "Data de Nascimento",
+    "dataEntrada": "Data de Entrada",
+    "conjuge": "Cônjuge",
+    "filiacao": "Filiação (Mãe e Pai)",
+    "rg": "RG (Registro Geral)",
+    "obs": "Observação",
+    "dataUltimaVisita": "Data da Última Visita"
+  }  
 }

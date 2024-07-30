@@ -1,14 +1,16 @@
 {    
   "geral": {
+    "cep": "Zip Code",
     "pais": "Country",
     "cidade": "City",
+    "bairro": "District",
     "estado": "State",
     "cargo": "Function",
     "documento": "Document",
     "selecionarCargo": "Select Function",
     "condicao": "Condition",
-    "selecionarCondicao": "Selecionar Condição",
-    "filiado": "Affiliate",
+    "selecionarCondicao": "Select Condition",
+    "filiado": "Affiliated",
     "pesquisar": "Search",
     "nome": "Name",
     "telefone": "Phone",
@@ -26,14 +28,19 @@
     "paginacaoDe": "Of",
     "paginacaoPagina": "Page",
     "true": "Yes",
-    "false": "No"
+    "false": "No",
+    "sexo": "Gender",
+    "masculino": "Male",
+    "feminino": "Female",
+    "informacoesBasicas": "Basic Informations",
+    "voltar": "Go Back"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Sign In",
     "atendente": "Attendant",      
     "entrar": "Login",
     "entrarSemConta": "Sign In without account",
-    "cpf":"Document",
+    "cpf":"Document (SSN)",
     "numeroAtendente": "Attendant Code",
     "numeroRol": "User Registration Code",
     "erroLoginInvalido": "Invalid Document or Code!",
@@ -67,6 +74,41 @@
   "textosControleFiliados": {
     "numeroRol": "User Registration Code",    
     "numeroRolIgreja": "Church Registration Code",
-    "nomeIgreja": "Church Name"
-  }
+    "nomeIgreja": "Church Name",
+    "verFicha": "See Form",
+    "verPedidos": "See Orders",
+    "verPessoaJuridica": "See Legal Entity"
+  },
+  "cargos": {
+    "0": "Member",
+    "1": "Assistant",
+    "2": "Worker",
+    "3": "Deacon",
+    "4": "Elder",
+    "5": "Missionary",
+    "6": "Evangelist",
+    "7": "Pastor"
+  },
+  "condicoes": {
+    "0": "Active",
+    "1": "Inactive",
+    "2": "Internal Process",
+    "3": "Dismissed",
+    "4": "Pending",
+    "5": "Deleted",
+    "6": "Deceased"
+  },
+  "textosFichaFiliado": 
+  {
+    "fichaFiliado": "Affiliated Form",
+    "profissao": "Profession",
+    "carregando": "Loading...",
+    "dataNascimento": "Date of birth",
+    "dataEntrada": "Joining Date",
+    "conjuge": "Spouse",
+    "filiacao": "Parents",
+    "rg": "State ID",
+    "obs": "Observation",
+    "dataUltimaVisita": "Last Visit Date"
+  }  
 }

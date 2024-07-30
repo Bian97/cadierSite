@@ -1,4 +1,4 @@
-import React, { useState, startTransition } from "react";
+import React, { useState, useEffect, startTransition } from "react";
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { logOut } from "../actions/UserActions";
@@ -9,7 +9,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Inicio from "../components/Inicio";
 import ControleFiliados from "../components/ControleFiliados";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 
 // Apagar constantes após criação de componentes e importação dos mesmos
 const FiliadosScreen = () => <div>Filiados</div>;
@@ -33,6 +33,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentScreen, setCurrentScreen] = useState(null);
 
   const sairConta = async () => {
@@ -43,7 +44,16 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     });
   };
 
-  // Mapear as "telas" para os componentes correspondentes
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const screen = queryParams.get('t');
+    if (screen && telas[screen]) {
+      setCurrentScreen(() => telas[screen]);
+    } else {
+      setCurrentScreen(() => telas['Inicio']);
+    }
+  }, [location.search]);
+
   const telas = {
     Inicio: <Inicio />,
     Filiados: <FiliadosScreen />,

@@ -1,9 +1,9 @@
 import React, { useState, startTransition } from "react";
 import { connect, useDispatch } from 'react-redux';
-import { Card, CardContent, TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
+import { Card, CardContent, TextField, Button, Checkbox, FormControlLabel, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { CARGOS, CONDICAO } from '../constants/Constants';
+import { useCargos, useCondicao } from '../constants/Constants';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { selectRow, pagination } from './util/DatatableHelper';
 import { getFiliados } from "../actions/ControleFiliadosActions";
@@ -16,6 +16,8 @@ const ControleFiliados = ({ token }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const cargos = useCargos();
+  const condicoes = useCondicao();
   const [filters, setFilters] = useState({
     numeroRol: "",
     documento: "",
@@ -36,9 +38,9 @@ const ControleFiliados = ({ token }) => {
     { dataField: 'nome', text: t("geral.nome"), width: 150 },
     { 
       dataField: 'cargo',
-      text: 'Cargo',
+      text: t("geral.cargo"),
       formatter: (cell) => {
-        const cargo = CARGOS.find(cargo => cargo.id === cell);
+        const cargo = cargos.find(cargo => cargo.id === cell);
         return cargo ? cargo.nome : '';
       },
       width: 150 
@@ -58,11 +60,11 @@ const ControleFiliados = ({ token }) => {
       formatter: (cell, row) => {
         return (
         <>
-          <Button variant="contained" color="primary" onClick={() => handleVerFicha(row)}>Ver Ficha</Button>
+          <Button variant="contained" color="primary" onClick={() => handleVerFicha(row)}>{t("textosControleFiliados.verFicha")}</Button>
           <span style={{ margin: '1%' }}></span>
-          <Button variant="contained" color="primary" onClick={() => handleVerPedidos(row)}>Ver Pedidos</Button>
+          <Button variant="contained" color="primary" onClick={() => handleVerPedidos(row)}>{t("textosControleFiliados.verPedidos")}</Button>
           <span style={{ margin: '1%' }}></span>
-          <Button variant="contained" color="primary" onClick={() => handleVerPessoaJuridica(row)}>Ver Pessoa Jurídica</Button>
+          <Button variant="contained" color="primary" onClick={() => handleVerPessoaJuridica(row)}>{t("textosControleFiliados.verPessoaJuridica")}</Button>
         </>
         );
       },
@@ -96,7 +98,6 @@ const ControleFiliados = ({ token }) => {
   // };  
 
   const handleSearch = async () => {
-    console.log("Filtros aplicados:", filters);
     startTransition(async () => {
       try 
       {
@@ -128,52 +129,51 @@ const ControleFiliados = ({ token }) => {
   return (
     <Card className="card">
       <CardContent>
-        <legend>Controle de Filiados</legend>
+        <legend>{t("textosMenu.controlefiliados")}</legend>
         <fieldset>
           <div className="row">
             <div className="form-group col-md-3 mb-3">
-              <TextField className="form-control" type="text" onChange={handleChange} name="numeroRol" label="Número do Rol" />
+              <TextField className="form-control" type="text" onChange={handleChange} name="numeroRol" label={t("textosControleFiliados.numeroRol")} />
             </div>
             <div className="form-group col-md-3 mb-3">
-              <TextField className="form-control" type="text" onChange={handleChange} name="documento" label="Documento" />
+              <TextField className="form-control" type="text" onChange={handleChange} name="documento" label={t("formularioLoginTextos.cpf")} />
             </div>            
             <div className="form-group col-md-3 mb-3">
-              <TextField className="form-control" type="text" onChange={handleChange} name="numeroRolIgreja" label="Número do Rol da Igreja" />
+              <TextField className="form-control" type="text" onChange={handleChange} name="numeroRolIgreja" label={t("textosControleFiliados.numeroRolIgreja")} />
             </div>
             <div className="form-group col-md-3 mb-3">
-              <TextField className="form-control" type="text" onChange={handleChange} name="nomeIgreja" label="Nome da Igreja" />
+              <TextField className="form-control" type="text" onChange={handleChange} name="nomeIgreja" label={t("textosControleFiliados.nomeIgreja")} />
             </div>            
             <div className="form-group col-md-3 mb-3">
-              <TextField className="form-control" type="text" onChange={handleChange} name="cidade" label="Cidade" />
+              <TextField className="form-control" type="text" onChange={handleChange} name="cidade" label={t("geral.cidade")} />
             </div>
             <div className="form-group col-md-3 mb-3">
-              <TextField className="form-control" type="text" onChange={handleChange} name="estado" label="Estado" />
+              <TextField className="form-control" type="text" onChange={handleChange} name="estado" label={t("geral.estado")} />
             </div>
             <div className="form-group col-md-3 mb-3">
-              <TextField className="form-control" type="text" onChange={handleChange} name="pais" label="País" />
-            </div>
-            {/* <div className="form-group col-md-3 mb-3">
-              <Form.Select className="form-control" name="cargo" label="Cargo">
-              <option value="">Selecionar Cargo</option>
-              {
-                CARGOS.map(cargo => <option key={cargo.id} value={cargo.id}>{cargo.nome}</option>)
-              }
-              </Form.Select>
-            </div> */}
+              <TextField className="form-control" type="text" onChange={handleChange} name="pais" label={t("geral.pais")} />
+            </div>            
+            <FormControl className="form-group col-md-3 mb-3">
+              <InputLabel id="condicao-select-label">{t("geral.condicao")}</InputLabel>
+              <Select
+                labelId="condicao-select-label"                
+                onChange={handleChange}
+                name="condicao"
+              >
+                <MenuItem value="">
+                  <em>{t("geral.selecionarCondicao")}</em>
+                </MenuItem>
+                {condicoes.map(condicao => (
+                  <MenuItem key={condicao.id} value={condicao.id}>
+                    {condicao.nome}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <div className="form-group col-md-3 mb-3">
-              <Form.Select className="form-control" onChange={handleChange} name="condicao" label="Condição">
-                <option value="">Selecionar Condição</option>
-              {
-                CONDICAO.map(condicao => <option key={condicao.id} value={condicao.id}>{condicao.nome}</option>)
-              }
-              </Form.Select>              
-            </div>
-            <div className="form-group col-md-3 mb-3">
-              <FormControlLabel control={<Checkbox name="filiado" onChange={handleChange} />} label="Filiado" />
-              <Button className="m-2" variant="contained" onClick={handleSearch}>Pesquisar</Button>
-            </div>
-
-            
+              <FormControlLabel control={<Checkbox name="filiado" onChange={handleChange} />} label={t("geral.filiado")} />
+              <Button className="m-2" variant="contained" onClick={handleSearch}>{t("geral.pesquisar")}</Button>
+            </div>            
           </div>
         </fieldset>
         <div style={{ height: '100%', width: '100%' }}>
