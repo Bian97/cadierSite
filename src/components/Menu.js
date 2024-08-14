@@ -110,7 +110,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
       <div id="header">
         <ul className="navBarUl">
           {filteredMenuItems.map((item) => (
-            <li key={item.label} onClick={(event) => handleMenuItemClick(item.label, event)}>
+          <li className="navBarLi" key={item.label} onClick={(event) => handleMenuItemClick(item.label, event)}>
             <a href="#">{t(`textosMenu.${item.label.toLowerCase()}`)}</a>
           </li>
           ))}

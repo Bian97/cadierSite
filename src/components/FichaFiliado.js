@@ -16,8 +16,6 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant }) => {
   const { numeroRol } = useParams();
   const cargos = useCargos();
   const condicoes = useCondicao();
-  const filiadoData = useSelector((state) => state.filiado.filiadoData);
-  const error = useSelector((state) => state.filiado.error);
   const navigate = useNavigate();
 
   const initialState = useRef({
@@ -427,8 +425,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant }) => {
         </Grid>
       </Card>
     );
-  }
-  
+  }  
 }
 
 const mapStateToProps = state => ({

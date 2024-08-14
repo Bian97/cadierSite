@@ -7,20 +7,38 @@
   padding-bottom: 0.6%;
 }
 
-li {
+.navBarLi {
   float: left;
 }
 
-li a {
+.navBarLi a {
   display: block;
-  color: white;
+  color: white !important;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
-li a:hover {
+.navBarLi a:hover {
+  background-color: #111 !important;
+}
+
+.dropdown-menu li {
+  float: left;
+}
+
+.dropdown-menu li a {
+  display: block;
+  color: #111;
+  background-color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown-menu li a:hover {
   background-color: #111;
+  color: white;
 }
 
 .btn-logout {
@@ -72,6 +90,10 @@ li a:hover {
   display: block !important; /* Garante que o menu seja exibido como um bloco */
 }
 
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle; /* Para centralizar verticalmente */
+}
 
 /* Dropdown button */
 /* .dropdown .dropbtn {

@@ -1,20 +1,15 @@
 import React, { useState, startTransition } from "react";
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Card, CardContent, TextField, Button, Checkbox, FormControlLabel, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useCargos, useCondicao } from '../constants/Constants';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { selectRow, pagination } from './util/DatatableHelper';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import { getFiliados } from "../actions/ControleFiliadosActions";
-import { logOut } from "../actions/UserActions";
-import { persistor } from '../store';
 import { useNavigate } from 'react-router-dom';
-
 
 const ControleFiliados = ({ token }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const cargos = useCargos();
   const condicoes = useCondicao();
@@ -32,10 +27,11 @@ const ControleFiliados = ({ token }) => {
   });
 
   const [filiadosState, setFiliadosState] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const columns = [
-    { dataField: 'idPFisica', text: t("textosControleFiliados.numeroRol"), width: 150 },
-    { dataField: 'nome', text: t("geral.nome"), width: 150 },
+    { dataField: 'idPFisica', text: t("textosControleFiliados.numeroRol"), width: 150, headerStyle: { textAlign: 'center' }, style: { textAlign: 'center' } },
+    { dataField: 'nome', text: t("geral.nome"), width: 150, headerStyle: { textAlign: 'center' }, style: { textAlign: 'center' } },
     { 
       dataField: 'cargo',
       text: t("geral.cargo"),
@@ -43,34 +39,48 @@ const ControleFiliados = ({ token }) => {
         const cargo = cargos.find(cargo => cargo.id === cell);
         return cargo ? cargo.nome : '';
       },
-      width: 150 
+      width: 150,
+      headerStyle: { textAlign: 'center' },
+      style: { textAlign: 'center' }
     },
-    { dataField: 'endereco.rua', text: t("geral.endereco"), width: 150 },
-    { dataField: 'pessoaJuridica.nome', text: t("textosControleFiliados.nomeIgreja"), width: 150 },
-    { dataField: 'telefone1', text: t("geral.telefone"), width: 150 },
+    { dataField: 'endereco.rua', text: t("geral.endereco"), width: 150, headerStyle: { textAlign: 'center' }, style: { textAlign: 'center' } },
+    { dataField: 'pessoaJuridica.idPJuridica', text: t("textosControleFiliados.numeroRolIgreja"), width: 150, headerStyle: { textAlign: 'center' }, style: { textAlign: 'center' } },
+    { dataField: 'pessoaJuridica.nome', text: t("textosControleFiliados.nomeIgreja"), width: 150, headerStyle: { textAlign: 'center' }, style: { textAlign: 'center' } },
+    { dataField: 'telefone1', text: t("geral.telefone"), width: 150, headerStyle: { textAlign: 'center' }, style: { textAlign: 'center' } },
     { dataField: 'situacaoCadastral.eFiliado', text: t("geral.filiado"), 
-      formatter: (cell) => 
-      { 
+      formatter: (cell) => { 
         return t("geral."+cell);
       },
-      width: 150 },
+      width: 150,
+      headerStyle: { textAlign: 'center' },
+      style: { textAlign: 'center' }
+    },
     { 
       dataField: 'detalhes', 
       text: t("geral.detalhes"), 
       formatter: (cell, row) => {
+        if(filters.filiado)
+          return (
+          <>
+            <Button variant="contained" color="primary" style={{ margin: '1%' }} onClick={() => handleVerFicha(row)}>{t("textosControleFiliados.verFicha")}</Button>
+            
+            <Button variant="contained" color="primary" style={{ margin: '1%' }} onClick={() => handleVerPedidos(row)}>{t("textosControleFiliados.verPedidos")}</Button>
+            
+            <Button variant="contained" color="primary" style={{ margin: '1%' }} onClick={() => handleVerPessoaJuridica(row)}>{t("textosControleFiliados.verPessoaJuridica")}</Button>
+          </>
+          );
+        else
         return (
-        <>
-          <Button variant="contained" color="primary" onClick={() => handleVerFicha(row)}>{t("textosControleFiliados.verFicha")}</Button>
-          <span style={{ margin: '1%' }}></span>
-          <Button variant="contained" color="primary" onClick={() => handleVerPedidos(row)}>{t("textosControleFiliados.verPedidos")}</Button>
-          <span style={{ margin: '1%' }}></span>
-          <Button variant="contained" color="primary" onClick={() => handleVerPessoaJuridica(row)}>{t("textosControleFiliados.verPessoaJuridica")}</Button>
-        </>
+          <>
+            <Button variant="contained" color="primary" onClick={() => handleVerFicha(row)}>{t("textosControleFiliados.verFicha")}</Button>
+          </>
         );
       },
-      width: 300 
-    },  
-  ];
+      width: 300,
+      headerStyle: { textAlign: 'center' },
+      style: { textAlign: 'center' }
+    },
+  ];    
 
   const handleVerFicha = (row) => {
     navigate(`/fichaDeFiliado/${row.idPFisica}`);
@@ -92,11 +102,6 @@ const ControleFiliados = ({ token }) => {
     setFilters({ ...filters, [name]: filterValue });
   };
 
-  // const handleCheckAll = (isChecked) => {
-  //   const updatedFiliadosState = filiadosState.map(item => ({ ...item, coluna1: isChecked }));
-  //   setFiliadosState(updatedFiliadosState);
-  // };  
-
   const handleSearch = async () => {
     startTransition(async () => {
       try 
@@ -110,13 +115,6 @@ const ControleFiliados = ({ token }) => {
           {
             switch(error.response.status)
             {
-              // case 401:
-              //   startTransition(async () => {
-              //     persistor.purge();
-              //     await dispatch(logOut);
-              //     navigate(`/login`);
-              //   });
-              //   break;
               default:
                 console.log(error);
                 break;
@@ -124,6 +122,28 @@ const ControleFiliados = ({ token }) => {
           }
       }
     });
+  };
+
+  const selectRow = {
+    mode: 'checkbox',
+    clickToSelect: true,
+    selectColumnPosition: 'left',
+    headerColumnStyle: { textAlign: 'center' },
+    onSelect: (row, isSelect, rowIndex, e) => {
+      if (isSelect) {
+        setSelectedRows([...selectedRows, row.idPFisica]);
+      } else {
+        setSelectedRows(selectedRows.filter(id => id !== row.idPFisica));
+      }
+    },
+    onSelectAll: (isSelect, rows, e) => {
+      if (isSelect) {
+        setSelectedRows(rows.map(row => row.idPFisica));
+      } else {
+        setSelectedRows([]);
+      }
+    },
+    selected: selectedRows
   };
 
   return (
@@ -136,14 +156,17 @@ const ControleFiliados = ({ token }) => {
               <TextField className="form-control" type="text" onChange={handleChange} name="numeroRol" label={t("textosControleFiliados.numeroRol")} />
             </div>
             <div className="form-group col-md-3 mb-3">
+              <TextField className="form-control" type="text" onChange={handleChange} name="nome" label={t("geral.nome")} />
+            </div>
+            <div className="form-group col-md-3 mb-3">
               <TextField className="form-control" type="text" onChange={handleChange} name="documento" label={t("formularioLoginTextos.cpf")} />
-            </div>            
+            </div>
             <div className="form-group col-md-3 mb-3">
               <TextField className="form-control" type="text" onChange={handleChange} name="numeroRolIgreja" label={t("textosControleFiliados.numeroRolIgreja")} />
             </div>
             <div className="form-group col-md-3 mb-3">
               <TextField className="form-control" type="text" onChange={handleChange} name="nomeIgreja" label={t("textosControleFiliados.nomeIgreja")} />
-            </div>            
+            </div>
             <div className="form-group col-md-3 mb-3">
               <TextField className="form-control" type="text" onChange={handleChange} name="cidade" label={t("geral.cidade")} />
             </div>
@@ -152,24 +175,26 @@ const ControleFiliados = ({ token }) => {
             </div>
             <div className="form-group col-md-3 mb-3">
               <TextField className="form-control" type="text" onChange={handleChange} name="pais" label={t("geral.pais")} />
-            </div>            
-            <FormControl className="form-group col-md-3 mb-3">
-              <InputLabel id="condicao-select-label">{t("geral.condicao")}</InputLabel>
-              <Select
-                labelId="condicao-select-label"                
-                onChange={handleChange}
-                name="condicao"
-              >
-                <MenuItem value="">
-                  <em>{t("geral.selecionarCondicao")}</em>
-                </MenuItem>
-                {condicoes.map(condicao => (
-                  <MenuItem key={condicao.id} value={condicao.id}>
-                    {condicao.nome}
+            </div>
+            <div className="form-group col-md-3 mb-3">
+              <FormControl className="form-group col-md-12 mb-3">
+                <InputLabel id="condicao-select-label">{t("geral.condicao")}</InputLabel>
+                <Select
+                  labelId="condicao-select-label"                
+                  onChange={handleChange}
+                  name="condicao"
+                >
+                  <MenuItem value="">
+                    <em>{t("geral.selecionarCondicao")}</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {condicoes.map(condicao => (
+                    <MenuItem key={condicao.id} value={condicao.id}>
+                      {condicao.nome}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
             <div className="form-group col-md-3 mb-3">
               <FormControlLabel control={<Checkbox name="filiado" onChange={handleChange} />} label={t("geral.filiado")} />
               <Button className="m-2" variant="contained" onClick={handleSearch}>{t("geral.pesquisar")}</Button>
@@ -177,7 +202,14 @@ const ControleFiliados = ({ token }) => {
           </div>
         </fieldset>
         <div style={{ height: '100%', width: '100%' }}>
-          <BootstrapTable keyField='id' data={ filiadosState } columns={ columns } selectRow={selectRow} pagination={ pagination } />        
+          <BootstrapTable 
+            keyField='idPFisica' 
+            data={ filiadosState } 
+            columns={ columns } 
+            selectRow={ selectRow } 
+            pagination={ paginationFactory() }
+            noDataIndication={t("geral.semResultados")}
+          />        
         </div>
       </CardContent>
     </Card>

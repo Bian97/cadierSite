@@ -33,7 +33,8 @@
     "masculino": "Masculino",
     "feminino": "Feminino",
     "informacoesBasicas": "Informações Básicas",
-    "voltar": "Voltar"
+    "voltar": "Voltar",
+    "semResultados": "Sem Resultados"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Entrar",
