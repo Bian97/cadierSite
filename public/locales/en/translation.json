@@ -34,7 +34,11 @@
     "feminino": "Female",
     "informacoesBasicas": "Basic Informations",
     "voltar": "Go Back",
-    "semResultados": "No Results"
+    "semResultados": "No Results",
+    "membro": "Common Member",
+    "vice": "Vice",
+    "presidente": "President",
+    "tipoMembro": "Kind of Member"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Sign In",
@@ -70,7 +74,8 @@
     "expedicaodocumentos": "Document Expedition",
     "controlereunioes": "Meets Control",
     "editarConta": "Edit Profile",
-    "perfil": "Profile"
+    "perfil": "Profile",
+    "salvar": "Save"
   },
   "textosControleFiliados": {
     "numeroRol": "User Registration Code",    
@@ -110,6 +115,8 @@
     "filiacao": "Parents",
     "rg": "State ID",
     "obs": "Observation",
-    "dataUltimaVisita": "Last Visit Date"
+    "dataUltimaVisita": "Last Visit Date",
+    "indicacao": "Indicated by",
+    "atendente": "Last Attendant"
   }  
 }

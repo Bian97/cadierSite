@@ -42,3 +42,56 @@ export const fetchFiliadoDataById = (token, id) => async dispatch => {
     });
   }
 };
+
+export const updateUserData = (data, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+
+    const response = await axios.patch(`${URLAPI}PessoaFisica`, data, config);
+
+    if (response.status === 200) 
+    {
+      dispatch({
+        type: 'UPDATE_USER_DATA',
+        payload: response.data, // Dados atualizados retornados pela API
+      });
+      alert('Dados atualizados com sucesso!');
+    } else {
+      alert('Erro ao atualizar os dados. Tente novamente.');
+    }
+  } catch (error) {
+    console.error("Erro ao salvar os dados: ", error);
+    alert('Erro ao salvar os dados. Verifique a conexão e tente novamente.');
+  }
+};
+
+export const createUserData = (data, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+
+    const response = await axios.post(`${URLAPI}PessoaFisica`, data, config);
+
+    if (response.status === 200) 
+    {
+      dispatch({
+        type: 'CREATE_USER_DATA',
+        payload: response.data,
+      });
+      alert('Dados criados com sucesso!');
+      return response.data;
+    } else {
+      alert('Erro ao criar os dados. Tente novamente.');
+    }
+  } catch (error) {
+    console.error("Erro ao salvar os dados: ", error);
+    alert('Erro ao salvar os dados. Verifique a conexão e tente novamente.');
+  }
+};

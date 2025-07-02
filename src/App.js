@@ -15,8 +15,12 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Login />} />
+
           <Route path="/inicio" element={<Menu />} />
-          <Route path="/fichaDeFiliado/:numeroRol" element={<FichaFiliado />} />
+          <Route path="/inicio/:tela" element={<Menu />} />
+
+          <Route path="/fichaDeFiliado" element={<FichaFiliado />} />
+          <Route path="/fichaDeFiliado/:numeroRol" element={<FichaFiliado />} />          
         </Routes>
       </ErrorBoundary>
     </Router>

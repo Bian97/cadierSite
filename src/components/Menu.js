@@ -9,7 +9,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Inicio from "../components/Inicio";
 import ControleFiliados from "../components/ControleFiliados";
-import { useNavigate, useLocation  } from 'react-router-dom';
+import FichaFiliado from "../components/FichaFiliado";
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 // Apagar constantes após criação de componentes e importação dos mesmos
 const FiliadosScreen = () => <div>Filiados</div>;
@@ -17,7 +18,6 @@ const CalendarioScreen = () => <div>Calendario</div>;
 const ApoioSocialScreen = () => <div>ApoioSocial</div>;
 const SobreNosScreen = () => <div>SobreNos</div>;
 const FaleConoscoScreen = () => <div>FaleConosco</div>;
-const FiliarPessoaFisicaScreen = () => <div>FiliarPessoaFisica</div>;
 const FiliarPessoaJuridicaScreen = () => <div>FiliarPessoaJuridica</div>;
 const EnvioDocumentosScreen = () => <div>EnvioDocumentos</div>;
 const ComunicarPagamentoScreen = () => <div>ComunicarPagamento</div>;
@@ -35,6 +35,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentScreen, setCurrentScreen] = useState(null);
+  const { tela } = useParams();
 
   const sairConta = async () => {
     startTransition(async () => {
@@ -44,15 +45,24 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     });
   };
 
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams(location.search);
+  //   const screen = queryParams.get('t');
+  //   if (screen && telas[screen]) {
+  //     setCurrentScreen(() => telas[screen]);
+  //   } else {
+  //     setCurrentScreen(() => telas['Inicio']);
+  //   }
+  // }, [location.search]);
+
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const screen = queryParams.get('t');
-    if (screen && telas[screen]) {
-      setCurrentScreen(() => telas[screen]);
+    if (tela && telas[tela]) {
+      setCurrentScreen(() => telas[tela]);
     } else {
       setCurrentScreen(() => telas['Inicio']);
     }
-  }, [location.search]);
+  }, [tela]);
+
 
   const telas = {
     Inicio: <Inicio />,
@@ -61,7 +71,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     ApoioSocial: <ApoioSocialScreen />,
     SobreNos: <SobreNosScreen />,
     FaleConosco: <FaleConoscoScreen />,
-    FiliarPessoaFisica: <FiliarPessoaFisicaScreen />,
+    FiliarPessoaFisica: <FichaFiliado />,
     FiliarPessoaJuridica: <FiliarPessoaJuridicaScreen />,
     EnvioDocumentos: <EnvioDocumentosScreen />,
     ComunicarPagamento: <ComunicarPagamentoScreen />,
@@ -102,8 +112,9 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
 
   const handleMenuItemClick = (tela, event) => {
     event.preventDefault();
-    setCurrentScreen(() => telas[tela]);
+    navigate(`/inicio/${tela}`);
   };
+
 
   return (
     <div>

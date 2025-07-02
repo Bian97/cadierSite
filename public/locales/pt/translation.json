@@ -1,6 +1,6 @@
 {
   "geral": {
-    "cep": "Zip Code",
+    "cep": "Cep",
     "pais": "País",
     "cidade": "Cidade",
     "bairro": "Bairro",
@@ -34,7 +34,11 @@
     "feminino": "Feminino",
     "informacoesBasicas": "Informações Básicas",
     "voltar": "Voltar",
-    "semResultados": "Sem Resultados"
+    "semResultados": "Sem Resultados",
+    "membro": "Membro Comum",
+    "vice": "Vice",
+    "presidente": "Presidente",
+    "tipoMembro": "Tipo de Membro"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Entrar",
@@ -70,7 +74,8 @@
     "expedicaodocumentos": "Expedição de Documentos",
     "controlereunioes": "Controle de Reuniões",
     "editarConta": "Editar Conta",
-    "perfil": "Perfil"
+    "perfil": "Perfil",
+    "salvar": "Salvar"
   },
   "textosControleFiliados": {
     "numeroRol": "Número do Rol",
@@ -78,7 +83,7 @@
     "nomeIgreja": "Nome da Igreja",
     "verFicha": "Ver Ficha",
     "verPedidos": "Ver Pedidos",
-    "verPessoaJuridica": "Ver Pessoa Jurídica"
+    "verPessoaJuridica": "Ver Pessoa Jurídica"    
   },
   "cargos": {
     "0": "Membro",
@@ -110,6 +115,8 @@
     "filiacao": "Filiação (Mãe e Pai)",
     "rg": "RG (Registro Geral)",
     "obs": "Observação",
-    "dataUltimaVisita": "Data da Última Visita"
-  }  
+    "dataUltimaVisita": "Data da Última Visita",
+    "indicacao": "Indicado por",
+    "atendente": "Último Atendente"
+  }
 }

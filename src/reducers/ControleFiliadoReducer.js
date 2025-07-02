@@ -16,6 +16,15 @@ const filiadoReducer = (state = initialState, action) => {
         ...state,
         error: action.payload
       };
+    case 'UPDATE_USER_DATA':
+      return {
+        ...state,
+        filiadoData: {
+          ...state.filiadoData,
+          ...action.payload
+        },
+        error: null
+      };
     default:
       return state;
   }
