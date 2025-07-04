@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import Login from "./components/Login";
 import Menu from "./components/Menu";

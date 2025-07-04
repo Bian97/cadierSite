@@ -29,7 +29,7 @@ const PedidosLojaScreen = () => <div>PedidosLoja</div>;
 const CadastroCalendarioScreen = () => <div>CadastroCalendario</div>;
 const ExpedicaoDocumentosScreen = () => <div>ExpedicaoDocumentos</div>;
 
-const Menu = ({ isAuthenticated, isAttendant }) => {
+const Menu = ({ isAuthenticated, isAttendant, idNumber }) => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,16 +45,6 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     });
   };
 
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(location.search);
-  //   const screen = queryParams.get('t');
-  //   if (screen && telas[screen]) {
-  //     setCurrentScreen(() => telas[screen]);
-  //   } else {
-  //     setCurrentScreen(() => telas['Inicio']);
-  //   }
-  // }, [location.search]);
-
   useEffect(() => {
     if (tela && telas[tela]) {
       setCurrentScreen(() => telas[tela]);
@@ -62,7 +52,6 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
       setCurrentScreen(() => telas['Inicio']);
     }
   }, [tela]);
-
 
   const telas = {
     Inicio: <Inicio />,
@@ -115,6 +104,10 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
     navigate(`/inicio/${tela}`);
   };
 
+  const handleCustomRedirect = (tela, event) => {
+    event.preventDefault();
+    navigate(`/${tela}`);
+  };
 
   return (
     <div>
@@ -125,17 +118,38 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
             <a href="#">{t(`textosMenu.${item.label.toLowerCase()}`)}</a>
           </li>
           ))}
-          <DropdownButton
-              as={ButtonGroup}
-              key={'Danger'}
-              id={`dropdown-variants-Danger`}
-              variant={'danger'}
-              title={t("textosMenu.perfil")}
-            >
-              <Dropdown.Item eventKey="1"><a className="dropdown-item" href="#">{t("textosMenu.editarConta")}</a></Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item eventKey="2"><button className="dropdown-item" type="button" onClick={async () => sairConta()}>{t("textosMenu.sair")}</button></Dropdown.Item>
-            </DropdownButton>
+          
+          {
+            isAuthenticated ? (
+              <DropdownButton
+                as={ButtonGroup}
+                key={'Danger'}
+                id={`dropdown-variants-Danger`}
+                variant={'danger'}
+                title={t("textosMenu.perfil")}
+              >
+                {!isAttendant && (
+                  <Dropdown.Item eventKey="1">
+                    <a className="dropdown-item" onClick={(event) => handleCustomRedirect(`fichaDeFiliado/${idNumber}`, event)}>
+                      {t("textosMenu.editarConta")}
+                    </a>
+                  </Dropdown.Item>
+                )}
+                {!isAttendant && <Dropdown.Divider />}
+                <Dropdown.Item eventKey="2">
+                  <button className="dropdown-item" type="button" onClick={async () => sairConta()}>
+                    {t("textosMenu.sair")}
+                  </button>
+                </Dropdown.Item>
+              </DropdownButton>
+            ) : (
+              <li className="navBarLi login-button">
+                <button onClick={() => navigate('/login')}>
+                  {t("formularioLoginTextos.entrar")}
+                </button>
+              </li>
+            )
+          }
         </ul>      
       </div>
       <div id="body">
@@ -152,6 +166,7 @@ const Menu = ({ isAuthenticated, isAttendant }) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.user.possuiConta,
   isAttendant: state.user.atendente,
+  idNumber: state.user.numero
 });
 
 const mapDispatchToProps = {};

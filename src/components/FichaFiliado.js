@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import {
   Card, CardContent, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel,
@@ -65,13 +65,13 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formValues.rol && formValues.rol !== '') {      
-      dispatch(updateUserData(formValues, token));
-    } 
-    else 
-    {
-      const createdData = await dispatch(createUserData(formValues, token));
-      if (createdData && createdData.rol) {
+    const dadosLimpos = limparCamposVazios(formValues);
+
+    if (dadosLimpos.rol) {
+      dispatch(updateUserData(dadosLimpos, token));
+    } else {
+      const createdData = await dispatch(createUserData(dadosLimpos, token));
+      if (createdData?.rol) {
         setFormValues((prevValues) => ({
           ...prevValues,
           rol: createdData.rol,
@@ -80,59 +80,77 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
     }
   };
 
+  const limparCamposVazios = (obj) => {
+    const novoObj = {};
+    Object.entries(obj).forEach(([key, value]) => {
+      if (typeof value === 'string' && value.trim() === '') {
+        novoObj[key] = null;
+      } else {
+        novoObj[key] = value;
+      }
+    });
+    return novoObj;
+  };
+
   useEffect(() => {
     if (numeroRol) {
       setFormValues(initialState.current);
       fetchFiliadoDataById(token, numeroRol);
     }
-    else{
+    else
+    {
       const hoje = new Date().toISOString().split('T')[0];
       setFormValues(prev => ({
         ...prev,
-        filiado: 'false',
+        filiado: false,
         dataUltimaVisita: hoje,
         dataEntrada: hoje,
-        condicao: 2
+        condicao: 2,
+        sexo: 'masculino'
       }));
     }
   }, [token, numeroRol, fetchFiliadoDataById]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchFiliadoDataById(token, numeroRol);
-      if (data) {
-        setFormValues({
-          rol: data.rol || null,
-          nome: data.nome || null,
-          profissao: data.profissao || null,
-          email: data.email || null,
-          filiacao: data.filiacao || null,
-          telefone1: data.telefone1 || null,
-          telefone2: data.telefone2 || null,
-          dataNascimento: data.dataNascimento ? data.dataNascimento.substring(0, 10) : null,
-          sexo: data.sexo || 'masculino',
-          conjuge: data.conjuge || null,
-          cpf: data.cpf || null,
-          rg: data.rg || null,
-          cargo: data.cargo || null,
-          cep: data.cep || null,
-          logradouro: data.logradouro || null,
-          bairro: data.bairro || null,
-          cidade: data.cidade || null,
-          estado: data.estado || null,
-          pais: data.pais || null,
-          obs: data.obs || null,
-          dataEntrada: data.dataEntrada ? data.dataEntrada.substring(0, 10) : null,
-          dataUltimaVisita: data.dataUltimaVisita ? data.dataUltimaVisita.substring(0, 10) : null,
-          filiado: data.filiado,
-          condicao: data.condicao || 0,
-          indicacao: data.indicacao,
-          atendente: data.atendente,
-          idUsuarioAtendente: isAttendant ? attendantNumber : 0,
-          idSituacaoCadastral: isAttendant ? data.idSituacaoCadastral : 0,
-          idTipoMembro: data.idTipoMembro || 0
-        });
-      }
+      if (numeroRol) 
+      {
+        const data = await fetchFiliadoDataById(token, numeroRol);
+        if (data) 
+        {
+          setFormValues({
+            rol: data.rol || null,
+            nome: data.nome || null,
+            profissao: data.profissao || null,
+            email: data.email || null,
+            filiacao: data.filiacao || null,
+            telefone1: data.telefone1 || null,
+            telefone2: data.telefone2 || null,
+            dataNascimento: data.dataNascimento ? data.dataNascimento.substring(0, 10) : null,
+            sexo: data.sexo || 'masculino',
+            conjuge: data.conjuge || null,
+            cpf: data.cpf || null,
+            rg: data.rg || null,
+            cargo: data.cargo || null,
+            cep: data.cep || null,
+            logradouro: data.logradouro || null,
+            bairro: data.bairro || null,
+            cidade: data.cidade || null,
+            estado: data.estado || null,
+            pais: data.pais || null,
+            obs: data.obs || null,
+            dataEntrada: data.dataEntrada ? data.dataEntrada.substring(0, 10) : null,
+            dataUltimaVisita: data.dataUltimaVisita ? data.dataUltimaVisita.substring(0, 10) : null,
+            filiado: data.filiado,
+            condicao: data.condicao || 0,
+            indicacao: data.indicacao,
+            atendente: data.atendente,
+            idUsuarioAtendente: attendantNumber,
+            idSituacaoCadastral: data.idSituacaoCadastral,
+            idTipoMembro: data.idTipoMembro || 0
+          });
+        }
+      }      
       setLoading(false);
     };
     fetchData();
@@ -222,6 +240,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       onChange={handleInputChange}
                       fullWidth
                       margin="normal"
+                      required
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -536,6 +555,9 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                   />
                 </Grid>
             </Grid>
+            <input type="hidden" name="idUsuarioAtendente" value={formValues.idUsuarioAtendente} />
+            <input type="hidden" name="idSituacaoCadastral" value={formValues.idSituacaoCadastral} />
+
           </CardContent>
           <Grid container justifyContent="flex-end" style={{ padding: '10px' }}>
             <Button variant="contained" color="primary" style={{ marginRight: '10px', backgroundColor: 'green', color: 'white' }} type="submit">
@@ -568,7 +590,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
 const mapStateToProps = state => ({
   token: state.user.token,
   isAttendant: state.user.atendente,
-  attendantNumber: state.user.numero
+  attendantNumber: state.user.atendente ? state.user.numero : null
 });
 
 const mapDispatchToProps = dispatch => ({
