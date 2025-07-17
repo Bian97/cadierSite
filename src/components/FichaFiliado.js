@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import {
   Card, CardContent, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel,
-  Radio, Select, MenuItem, Grid, Button, InputLabel
+  Radio, Select, MenuItem, Grid, Button, InputLabel, Checkbox
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import { useCargos, useCondicao } from '../constants/Constants';
 import '../css/FichaFiliado.css';
 import { fetchFiliadoDataById, updateUserData, createUserData } from '../actions/ControleFiliadosActions';
 import { useNavigate } from 'react-router-dom';
+import { showErro, showSucesso, showInfo } from '../services/NotificacaoService';
 
 const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumber }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,32 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
   const navigate = useNavigate();
   var bloqueiaEdicao = isAttendant || !numeroRol;
   var primeiroCadastro = !numeroRol;
+
+  const maxLengthPorCampo = {
+    cpf: 11,
+    telefone1: 15,
+    telefone2: 15,
+    cep: 10,
+    rg: 15,
+    nome: 150,
+    conjuge: 150,
+    filiacao: 300,
+    profissao: 50,
+    pais: 50,
+    bairro: 50,
+    cidade: 50,
+    estado: 30,
+    indicacao: 100,
+    email: 100,
+    logradouro: 100,
+    obs: 500
+  };
+
+  const [termosAceitos, setTermosAceitos] = useState({
+    termo1: false,
+    termo2: false,
+    termo3: false
+  });
 
   const initialState = useRef({
     rol: '',
@@ -34,7 +61,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
     filiacao: '',
     cpf: '',
     rg: '',
-    cargo: '',
+    cargo: 0,
     cep: '',
     logradouro: '',
     bairro: '',
@@ -62,6 +89,14 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
       navigate('/inicio');
   };
 
+  const handleTermosChange = (e) => {
+    const { name, checked } = e.target;
+    setTermosAceitos((prev) => ({
+      ...prev,
+      [name]: checked
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,6 +105,11 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
     if (dadosLimpos.rol) {
       dispatch(updateUserData(dadosLimpos, token));
     } else {
+      if (primeiroCadastro && (!termosAceitos.termo1 || !termosAceitos.termo2 || !termosAceitos.termo3)) {
+        showInfo(t("textosFichaFiliado.aceiteTodosOsTermos"));
+        return;
+      }
+
       const createdData = await dispatch(createUserData(dadosLimpos, token));
       if (createdData?.rol) {
         setFormValues((prevValues) => ({
@@ -106,7 +146,9 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
         dataUltimaVisita: hoje,
         dataEntrada: hoje,
         condicao: 2,
-        sexo: 'masculino'
+        sexo: 'masculino',
+        cargo: 0,
+        idTipoMembro: 1,
       }));
     }
   }, [token, numeroRol, fetchFiliadoDataById]);
@@ -131,7 +173,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
             conjuge: data.conjuge || null,
             cpf: data.cpf || null,
             rg: data.rg || null,
-            cargo: data.cargo || null,
+            cargo: data.cargo || 0,
             cep: data.cep || null,
             logradouro: data.logradouro || null,
             bairro: data.bairro || null,
@@ -164,11 +206,25 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    let newValue = value;
+
+    if (['telefone1', 'telefone2', 'cpf', 'cep', 'rg'].includes(name)) {
+      // Mantém apenas números
+      newValue = value.replace(/\D/g, '');
+    }
+
+    if (['nome', 'conjuge', 'filiacao', 'profissao', 'pais', 'bairro', 'cidade', 'estado', 'indicacao'].includes(name)) {
+      // Remove tudo que não for letra, espaço ou acento
+      newValue = value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    }
+
     setFormValues({
       ...formValues,
-      [name]: value
+      [name]: newValue
     });
-  };  
+  };
+
 
   if (loading) {
     return <div>{t("textosFichaFiliado.carregando")}</div>;
@@ -220,6 +276,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       margin="normal"
                       disabled={!bloqueiaEdicao}
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["nome"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -230,6 +287,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       onChange={handleInputChange}
                       fullWidth
                       margin="normal"
+                      inputProps={{ maxLength: maxLengthPorCampo["profissao"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -241,6 +299,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["email"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -252,6 +311,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["telefone1"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -262,6 +322,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       onChange={handleInputChange}
                       fullWidth
                       margin="normal"
+                      inputProps={{ maxLength: maxLengthPorCampo["telefone2"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -287,6 +348,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       disabled={!bloqueiaEdicao}
+                      inputProps={{ maxLength: maxLengthPorCampo["conjuge"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -298,6 +360,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       disabled={!bloqueiaEdicao}
+                      inputProps={{ maxLength: maxLengthPorCampo["filiacao"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -310,6 +373,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       margin="normal"
                       disabled={!bloqueiaEdicao}
                       required={!bloqueiaEdicao ? false : true}
+                      inputProps={{ maxLength: maxLengthPorCampo["cpf"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -322,28 +386,21 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       margin="normal"
                       disabled={!bloqueiaEdicao}
                       required={!bloqueiaEdicao ? false : true}
+                      inputProps={{ maxLength: maxLengthPorCampo["rg"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <FormControl fullWidth margin="normal">
+                    <FormControl fullWidth margin="normal" required>
                       <FormLabel>{t("geral.cargo")}</FormLabel>
                       <Select
                         name="cargo"
-                        value={formValues.cargo}
+                        value={Number(formValues.cargo)}
                         onChange={handleInputChange}
                         disabled={!bloqueiaEdicao}
-                        required={!bloqueiaEdicao ? false : true}
-                        MenuProps={{
-                          PaperProps: {
-                            style: {
-                              maxHeight: 224,
-                              width: 250,
-                            },
-                          },
-                        }}
+                        displayEmpty
                       >
                         <MenuItem value="">
-                            <em>{t("geral.selecionarCargo")}</em>
+                          <em>{t("geral.selecionarCargo")}</em>
                         </MenuItem>
                         {cargos.map(cargo => (
                           <MenuItem key={cargo.id} value={cargo.id}>
@@ -351,6 +408,15 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                           </MenuItem>
                         ))}
                       </Select>
+                      
+                      <input
+                        tabIndex={-1}
+                        autoComplete="off"
+                        style={{ opacity: 0, height: 0, position: 'absolute' }}
+                        value={formValues.cargo}
+                        onChange={() => {}}
+                        required={!bloqueiaEdicao ? false : true}
+                      />
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -398,6 +464,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["cep"] }}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -409,6 +476,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["logradouro"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -420,6 +488,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["bairro"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -431,6 +500,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["cidade"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -442,6 +512,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["estado"] }}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -453,6 +524,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       fullWidth
                       margin="normal"
                       required
+                      inputProps={{ maxLength: maxLengthPorCampo["pais"] }}
                     />
                   </Grid>
                 </Grid>
@@ -469,6 +541,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                     margin="normal"
                     multiline
                     rows={4}
+                    inputProps={{ maxLength: maxLengthPorCampo["obs"] }}
                   />
                 </Grid>)
               }
@@ -483,6 +556,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                     disabled={!isAttendant}
                     fullWidth
                     margin="normal"
+                    inputProps={{ maxLength: maxLengthPorCampo["indicacao"] }}
                   />
                 </Grid>)
               }
@@ -557,6 +631,49 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
             </Grid>
             <input type="hidden" name="idUsuarioAtendente" value={formValues.idUsuarioAtendente} />
             <input type="hidden" name="idSituacaoCadastral" value={formValues.idSituacaoCadastral} />
+
+            {(!isAttendant && primeiroCadastro) && (
+              <Grid item xs={12} style={{ padding: '10px' }}>
+                <FormControl required component="fieldset" style={{ marginTop: 20 }}>
+                  <FormLabel component="legend">{t("textosFichaFiliado.termosObrigatorios")}</FormLabel>
+
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        name="termo1"
+                        checked={termosAceitos.termo1}
+                        onChange={handleTermosChange}
+                        color="primary"
+                      />
+                    }
+                    label={t("textoTermo.texto1")}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        name="termo2"
+                        checked={termosAceitos.termo2}
+                        onChange={handleTermosChange}
+                        color="primary"
+                      />
+                    }
+                    label={t("textoTermo.texto2")}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        name="termo3"
+                        checked={termosAceitos.termo3}
+                        onChange={handleTermosChange}
+                        color="primary"
+                      />
+                    }
+                    label={t("textoTermo.texto3")}
+                  />
+                </FormControl>
+              </Grid>
+            )}
+
 
           </CardContent>
           <Grid container justifyContent="flex-end" style={{ padding: '10px' }}>

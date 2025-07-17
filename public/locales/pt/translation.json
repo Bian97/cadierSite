@@ -35,10 +35,13 @@
     "informacoesBasicas": "Informações Básicas",
     "voltar": "Voltar",
     "semResultados": "Sem Resultados",
-    "membro": "Membro Comum",
+    "membro": "Membro",
     "vice": "Vice",
     "presidente": "Presidente",
-    "tipoMembro": "Tipo de Membro"
+    "tipoMembro": "Tipo de Membro",
+    "sucesso": "Sucesso",
+    "erro": "Erro",
+    "atencao": "Atenção"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Entrar",
@@ -117,6 +120,39 @@
     "obs": "Observação",
     "dataUltimaVisita": "Data da Última Visita",
     "indicacao": "Indicado por",
-    "atendente": "Último Atendente"
+    "atendente": "Último Atendente",
+    "termosObrigatorios": "Termos obrigatórios para prosseguir",
+    "aceiteTodosOsTermos": "Você precisa aceitar todos os termos para continuar o cadastro."
+  },
+  "textosValidacao":
+  {
+    "nomeObrigatorio": "O nome é obrigatório.",
+    "documentoSocialObrigatorio": "O CPF é obrigatório.",
+    "documentoSocialInvalido": "O CPF informado é inválido.",
+    "rgObrigatorio": "O RG é obrigatório.",
+    "emailObrigatorio": "O e-mail é obrigatório.",
+    "emailInvalido": "O e-mail informado é inválido.",
+    "enderecoObrigatorio": "O endereço é obrigatório.",
+    "ruaObrigatorio": "A rua é obrigatória.",
+    "bairroObrigatorio": "O bairro é obrigatório.",
+    "cidadeObrigatoria": "A cidade é obrigatória.",
+    "estadoObrigatorio": "O estado é obrigatório.",
+    "paisObrigatorio": "O país é obrigatório.",
+    "cepObrigatorio": "O CEP é obrigatório.",
+    "telefoneObrigatorio": "O telefone é obrigatório.",
+    "cargoObrigatorio": "O cargo é obrigatório.",
+    "dataNascimentoObrigatorio": "A data de nascimento é obrigatória.",
+    "dataEntradaObrigatoria": "A data de entrada é obrigatória.",
+    "documentoExistente": "Já existe um cadastro com o CPF informado."
+  },
+  "textoTermo": {
+    "texto1": "Entendo que estou criando a minha conta e só serei reconhecido como filiado após o pagamento da taxa de filiação e do envio dos documentos necessários.",
+    "texto2": "Entendo que, após filiado, só poderei ser desligado por meio de um processo formal de desligamento, que consiste na quitação de quaisquer débitos pendentes, como de mensalidade.",
+    "texto3": "Entendo que, após filiado, devo pagar uma taxa mensal de manutenção que consiste em um valor simbólico de R$10,00."
+  },
+  "textosMensagens": {
+    "dadosAtualizados": "Dados atualizados com sucesso!",
+    "dadosCriados": "Dados criados com sucesso!",
+    "erroSalvar": "Erro ao salvar os dados. Verifique a conexão e tente novamente."
   }
 }

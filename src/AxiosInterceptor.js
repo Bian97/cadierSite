@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { logOut } from './actions/UserActions';
+import i18n from './i18n';
+const { showErro } = require('../src/services/NotificacaoService');
 
-export default store => {
+export default store => {  
   axios.interceptors.response.use(
     response => response,
     error => {
@@ -11,6 +13,11 @@ export default store => {
           window.location.href = '/login';
         }
       }
+
+      if (error.response && error.response.status === 400) {
+        showErro(i18n.t(`textosValidacao.${error.response.data.erro}`));
+      }
+
       return Promise.reject(error);
     }
   );

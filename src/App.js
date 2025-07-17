@@ -4,9 +4,17 @@ import Menu from "./components/Menu";
 import FichaFiliado from "./components/FichaFiliado";
 import ErrorBoundary from "./util/ErrorBoundary";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { registrarNotificacaoHandler } from './services/NotificacaoService';
+import { showErro, showSucesso, showInfo } from './components/util/Notificacao';
 
 const App = () => {
   const user = useSelector((state) => state.user);
+
+  registrarNotificacaoHandler({
+    showErro,
+    showSucesso,
+    showInfo
+  });
 
   return (
     <Router>

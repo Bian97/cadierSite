@@ -38,7 +38,10 @@
     "membro": "Common Member",
     "vice": "Vice",
     "presidente": "President",
-    "tipoMembro": "Kind of Member"
+    "tipoMembro": "Kind of Member",
+    "sucesso": "Sucesso",
+    "erro": "Erro",
+    "atencao": "Atenção"
   },
   "formularioLoginTextos": {
     "entrarTitulo": "Sign In",
@@ -117,6 +120,38 @@
     "obs": "Observation",
     "dataUltimaVisita": "Last Visit Date",
     "indicacao": "Indicated by",
-    "atendente": "Last Attendant"
-  }  
+    "atendente": "Last Attendant",
+    "termosObrigatorios": "Termos obrigatórios para prosseguir",
+    "aceiteTodosOsTermos": "Você precisa aceitar todos os termos para continuar o cadastro."
+  },
+  "textosValidacao": {
+    "nomeObrigatorio": "Name is required.",
+    "documentoSocialObrigatorio": "SSN is required.",
+    "documentoSocialInvalido": "The SSN provided is invalid.",
+    "rgObrigatorio": "State ID is required.",
+    "emailObrigatorio": "Email is required.",
+    "emailInvalido": "The email provided is invalid.",
+    "enderecoObrigatorio": "Address is required.",
+    "ruaObrigatorio": "Street is required.",
+    "bairroObrigatorio": "District is required.",
+    "cidadeObrigatoria": "City is required.",
+    "estadoObrigatorio": "State is required.",
+    "paisObrigatorio": "Country is required.",
+    "cepObrigatorio": "Zip code is required.",
+    "telefoneObrigatorio": "Phone number is required.",
+    "cargoObrigatorio": "Function is required.",
+    "dataNascimentoObrigatorio": "Date of birth is required.",
+    "dataEntradaObrigatoria": "Joining date is required.",
+    "documentoExistente": "Já existe um cadastro com o CPF informado."
+  },
+  "textoTermo": {
+    "texto1": "Entendo que estou criando a minha conta e só serei reconhecido como filiado após o pagamento da taxa de filiação e do envio dos documentos necessários.",
+    "texto2": "Entendo que, após filiado, só poderei ser desligado por meio de um processo formal de desligamento, que consiste na quitação de quaisquer débitos pendentes, como de mensalidade.",
+    "texto3": "Entendo que, após filiado, devo pagar uma taxa mensal de manutenção que consiste em um valor simbólico de R$10,00."
+  },
+  "textosMensagens": {
+    "dadosAtualizados": "Dados atualizados com sucesso!",
+    "dadosCriados": "Dados criados com sucesso!",
+    "erroSalvar": "Erro ao salvar os dados. Verifique a conexão e tente novamente."
+  }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { URLAPI } from "../constants/Constants";
+import { showErro, showSucesso } from '../components/util/Notificacao';
 
 export const getFiliados = async (filters, token) => {
   try {
@@ -59,13 +60,11 @@ export const updateUserData = (data, token) => async (dispatch) => {
         type: 'UPDATE_USER_DATA',
         payload: response.data, // Dados atualizados retornados pela API
       });
-      alert('Dados atualizados com sucesso!');
-    } else {
-      alert('Erro ao atualizar os dados. Tente novamente.');
+      showSucesso('Dados atualizados com sucesso!');
     }
   } catch (error) {
     console.error("Erro ao salvar os dados: ", error);
-    alert('Erro ao salvar os dados. Verifique a conexão e tente novamente.');
+    // showErro('Erro ao salvar os dados. Verifique a conexão e tente novamente.');
   }
 };
 
@@ -85,13 +84,11 @@ export const createUserData = (data, token) => async (dispatch) => {
         type: 'CREATE_USER_DATA',
         payload: response.data,
       });
-      alert('Dados criados com sucesso!');
+      showSucesso('Dados criados com sucesso!');
       return response.data;
-    } else {
-      alert('Erro ao criar os dados. Tente novamente.');
     }
   } catch (error) {
     console.error("Erro ao salvar os dados: ", error);
-    alert('Erro ao salvar os dados. Verifique a conexão e tente novamente.');
+    // showErro('Erro ao salvar os dados. Verifique a conexão e tente novamente.');
   }
 };
