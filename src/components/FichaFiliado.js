@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useCargos, useCondicao } from '../constants/Constants';
 import '../css/FichaFiliado.css';
 import { fetchFiliadoDataById, updateUserData, createUserData } from '../actions/ControleFiliadosActions';
+import { fetchEnderecoViaCep } from '../actions/RequisicoesExternasActions';
 import { useNavigate } from 'react-router-dom';
 import { showErro, showSucesso, showInfo } from '../services/NotificacaoService';
 
@@ -105,7 +106,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
     if (dadosLimpos.rol) {
       dispatch(updateUserData(dadosLimpos, token));
     } else {
-      if (primeiroCadastro && (!termosAceitos.termo1 || !termosAceitos.termo2 || !termosAceitos.termo3)) {
+      if (!isAttendant && (primeiroCadastro && (!termosAceitos.termo1 || !termosAceitos.termo2 || !termosAceitos.termo3))) {
         showInfo(t("textosFichaFiliado.aceiteTodosOsTermos"));
         return;
       }
@@ -225,6 +226,42 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
     });
   };
 
+  const [cepTimer, setCepTimer] = useState(null);
+
+  useEffect(() => {
+    if (cepTimer) {
+      clearTimeout(cepTimer);
+    }
+
+    if (formValues.cep && formValues.cep.length >= 5) {
+      const timer = setTimeout(async () => {
+        try {
+          const endereco = await dispatch(fetchEnderecoViaCep(token, formValues.cep));
+          if (endereco) {
+            setFormValues(prev => ({
+              ...prev,
+              logradouro: endereco.logradouro || '',
+              bairro: endereco.bairro || '',
+              cidade: endereco.localidade || '',
+              estado: endereco.uf || '',
+              pais: 'Brasil'
+            }));
+          }
+        } catch (error) {
+          showErro('Erro ao buscar o endereço.');
+        }
+      }, 500);
+
+      setCepTimer(timer);
+    }
+
+    return () => {
+      if (cepTimer) {
+        clearTimeout(cepTimer);
+      }
+    };
+
+  }, [formValues.cep]); 
 
   if (loading) {
     return <div>{t("textosFichaFiliado.carregando")}</div>;
@@ -460,7 +497,7 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
                       name="cep"
                       label={t("geral.cep")}
                       value={formValues.cep}
-                      onChange={handleInputChange}
+                      onChange={handleInputChange}                      
                       fullWidth
                       margin="normal"
                       required
