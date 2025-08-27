@@ -60,8 +60,10 @@ export const updateUserData = (data, token) => async (dispatch) => {
         type: 'UPDATE_USER_DATA',
         payload: response.data, // Dados atualizados retornados pela API
       });
-      showSucesso('Dados atualizados com sucesso!');
+
+      return response.data;
     }
+    
   } catch (error) {
     console.error("Erro ao salvar os dados: ", error);
     // showErro('Erro ao salvar os dados. Verifique a conexão e tente novamente.');

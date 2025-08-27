@@ -104,7 +104,12 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
     const dadosLimpos = limparCamposVazios(formValues);
 
     if (dadosLimpos.rol) {
-      dispatch(updateUserData(dadosLimpos, token));
+      const updatedData = await dispatch(updateUserData(dadosLimpos, token));
+
+      if (updatedData) {
+        showSucesso(t('textosMensagens.dadosAtualizados'));
+      }
+
     } else {
       if (!isAttendant && (primeiroCadastro && (!termosAceitos.termo1 || !termosAceitos.termo2 || !termosAceitos.termo3))) {
         showInfo(t("textosFichaFiliado.aceiteTodosOsTermos"));
@@ -117,6 +122,8 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
           ...prevValues,
           rol: createdData.rol,
         }));
+
+        showSucesso(t('textosFichaFiliado.usuarioFiliado', { rol: createdData.rol }));
       }
     }
   };

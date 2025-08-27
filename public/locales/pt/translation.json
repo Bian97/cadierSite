@@ -122,7 +122,8 @@
     "indicacao": "Indicado por",
     "atendente": "Último Atendente",
     "termosObrigatorios": "Termos obrigatórios para prosseguir",
-    "aceiteTodosOsTermos": "Você precisa aceitar todos os termos para continuar o cadastro."
+    "aceiteTodosOsTermos": "Você precisa aceitar todos os termos para continuar o cadastro.",
+    "usuarioFiliado": "Usuário filiado com sucesso! Seu número do rol é {{rol}}. Guarde-o para futuras consultas."
   },
   "textosValidacao":
   {
