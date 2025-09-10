@@ -12,9 +12,10 @@ const Login = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
+const changeLanguage = (lng) => {    
+  i18n.changeLanguage(lng);
+};
+
 
   const userPlaceholder = isAttendant ? t("formularioLoginTextos.cpf") : t("formularioLoginTextos.cpf");
   const passwordPlaceholder = isAttendant ? t("formularioLoginTextos.numeroAtendente") : t("formularioLoginTextos.numeroRol");
@@ -111,8 +112,8 @@ const Login = () => {
           </div>
           <div className="mt-2">
             <div className="language-buttons">
-              <button type="button" className="button-brazil" onClick={() => changeLanguage('pt')}></button>
-              <button type="button" className="button-usa" onClick={() => changeLanguage('en')}></button>
+              <button type="button" className="button-brazil" onClick={() => changeLanguage('pt_BR')}></button>
+              <button type="button" className="button-usa" onClick={() => changeLanguage('en_US')}></button>
             </div>
           </div>
         </form>

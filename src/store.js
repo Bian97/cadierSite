@@ -9,9 +9,7 @@ import storage from 'redux-persist/lib/storage';
 
 // Middleware de logging
 const loggingMiddleware = store => next => action => {
-  console.log('Disparou ação:', action);
   const result = next(action);
-  console.log('Novo estado:', store.getState());
   return result;
 };
 

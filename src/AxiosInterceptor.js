@@ -4,6 +4,20 @@ import i18n from './i18n';
 const { showErro } = require('../src/services/NotificacaoService');
 
 export default store => {  
+
+  // Interceptor de request: adiciona Accept-Language
+  axios.interceptors.request.use(
+    config => {
+      const culture = localStorage.getItem("i18nextLng") || "pt_BR";
+      config.headers['Accept-Language'] = culture;
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
+
+  // Interceptor de response: tratamento de erros
   axios.interceptors.response.use(
     response => response,
     error => {
