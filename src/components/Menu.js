@@ -24,12 +24,13 @@ const ComunicarPagamentoScreen = () => <div>ComunicarPagamento</div>;
 const DownloadsScreen = () => <div>Downloads</div>;
 const DepartamentosScreen = () => <div>Departamentos</div>;
 const LojaScreen = () => <div>Loja</div>;
+const CompletarFiliacaoScreen = () => <div>CompletarFiliacao</div>;
 const SecretariaScreen = () => <div>Secretaria</div>;
 const PedidosLojaScreen = () => <div>PedidosLoja</div>;
 const CadastroCalendarioScreen = () => <div>CadastroCalendario</div>;
 const ExpedicaoDocumentosScreen = () => <div>ExpedicaoDocumentos</div>;
 
-const Menu = ({ isAuthenticated, isAttendant, idNumber }) => {
+const Menu = ({ isAuthenticated, isAttendant, idNumber, isVisitant }) => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ const Menu = ({ isAuthenticated, isAttendant, idNumber }) => {
     Downloads: <DownloadsScreen />,
     Departamentos: <DepartamentosScreen />,
     Loja: <LojaScreen />,
+    CompletarFiliacao: <CompletarFiliacaoScreen />,
     Secretaria: <SecretariaScreen />,
     ControleFiliados: <ControleFiliados />,
     PedidosLoja: <PedidosLojaScreen />,
@@ -88,6 +90,7 @@ const Menu = ({ isAuthenticated, isAttendant, idNumber }) => {
     { label: "Downloads", role: "FILIADO" },
     { label: "Departamentos", role: "FILIADO" },
     { label: "Loja", role: "FILIADO" },
+    { label: "CompletarFiliacao", role: "VISITANTE" },
     { label: "Secretaria", role: "FILIADO" },
     { label: "ControleFiliados", role: "ATENDENTE" },
     { label: "PedidosLoja", role: "ATENDENTE" },
@@ -96,7 +99,8 @@ const Menu = ({ isAuthenticated, isAttendant, idNumber }) => {
   ];
 
   const filteredMenuItems = menuItems.filter(
-    (item) => item.role === "GERAL" || (isAuthenticated && item.role === "FILIADO" && !isAttendant) || (isAuthenticated && item.role === "ATENDENTE" && isAttendant)
+    (item) => item.role === "GERAL" || (isAuthenticated && item.role === "FILIADO" && !isAttendant && !isVisitant) || (isAuthenticated && item.role === "ATENDENTE" && isAttendant) 
+      || (isAuthenticated && item.role === "VISITANTE" && !isAttendant && isVisitant)
   );
 
   const handleMenuItemClick = (tela, event) => {
@@ -166,7 +170,8 @@ const Menu = ({ isAuthenticated, isAttendant, idNumber }) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.user.possuiConta,
   isAttendant: state.user.atendente,
-  idNumber: state.user.numero
+  idNumber: state.user.numero,
+  isVisitant: state.user.situacao === 'VISITANTE'
 });
 
 const mapDispatchToProps = {};

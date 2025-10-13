@@ -3,14 +3,16 @@ import { LOGIN, LOGOUT, LOGINSEMCONTA } from "../actions/UserActions";
 const user = (state = { estaLogado: false, documento: "", numero: "", atendente: false, token: "", possuiConta: false }, action) => {
   switch (action.type) {      
     case LOGIN:
-      const { documento, numero, atendente, token } = action.payload;
+      const { documento, numero, atendente, token, situacao, nome } = action.payload;
       return {
         estaLogado: true,
         documento,
         numero,
         atendente,
         token,
-        possuiConta: true
+        possuiConta: true,
+        situacao,
+        nome
       };
     case LOGINSEMCONTA:
       return {
@@ -19,7 +21,9 @@ const user = (state = { estaLogado: false, documento: "", numero: "", atendente:
         numero: "",
         atendente: false,
         token: "",
-        possuiConta: false
+        possuiConta: false,
+        situacao: "Visitante",
+        nome: ""
       };
     case LOGOUT:
       return {
@@ -28,7 +32,9 @@ const user = (state = { estaLogado: false, documento: "", numero: "", atendente:
         numero: "",
         atendente: false,
         token: "",
-        possuiConta: false
+        possuiConta: false,
+        situacao: "",
+        nome: ""
       };
     default:
       return state;

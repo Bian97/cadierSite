@@ -13,7 +13,7 @@ import { fetchEnderecoViaCep } from '../actions/RequisicoesExternasActions';
 import { useNavigate } from 'react-router-dom';
 import { showErro, showSucesso, showInfo } from '../services/NotificacaoService';
 
-const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumber }) => {
+const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumber, userName }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { numeroRol } = useParams();
@@ -77,7 +77,8 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
     filiado: 'não',
     idUsuarioAtendente: 0,
     idSituacaoCadastral: 0,
-    idTipoMembro: 0
+    idTipoMembro: 0,
+    indicacao: userName
   });
 
   const [formValues, setFormValues] = useState(initialState.current);
@@ -751,7 +752,8 @@ const FichaFiliado = ({ token, fetchFiliadoDataById, isAttendant, attendantNumbe
 const mapStateToProps = state => ({
   token: state.user.token,
   isAttendant: state.user.atendente,
-  attendantNumber: state.user.atendente ? state.user.numero : null
+  attendantNumber: state.user.atendente ? state.user.numero : null,
+  userName: state.user.nome
 });
 
 const mapDispatchToProps = dispatch => ({
