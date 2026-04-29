@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-export const URLAPI = "https://localhost:32779/";
+export const URLAPI = "http://localhost/";
 
 export const useCargos = () => {
   const { t } = useTranslation();

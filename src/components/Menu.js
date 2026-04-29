@@ -10,6 +10,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Inicio from "../components/Inicio";
 import ControleFiliados from "../components/ControleFiliados";
 import FichaFiliado from "../components/FichaFiliado";
+import CompletarFiliacao from "../components/CompletarFiliacao";
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 // Apagar constantes após criação de componentes e importação dos mesmos
@@ -20,11 +21,10 @@ const SobreNosScreen = () => <div>SobreNos</div>;
 const FaleConoscoScreen = () => <div>FaleConosco</div>;
 const FiliarPessoaJuridicaScreen = () => <div>FiliarPessoaJuridica</div>;
 const EnvioDocumentosScreen = () => <div>EnvioDocumentos</div>;
-const ComunicarPagamentoScreen = () => <div>ComunicarPagamento</div>;
 const DownloadsScreen = () => <div>Downloads</div>;
 const DepartamentosScreen = () => <div>Departamentos</div>;
 const LojaScreen = () => <div>Loja</div>;
-const CompletarFiliacaoScreen = () => <div>CompletarFiliacao</div>;
+const ComunicarPagamentoScreen = () => <div>ComunicarPagamento</div>;
 const SecretariaScreen = () => <div>Secretaria</div>;
 const PedidosLojaScreen = () => <div>PedidosLoja</div>;
 const CadastroCalendarioScreen = () => <div>CadastroCalendario</div>;
@@ -68,7 +68,7 @@ const Menu = ({ isAuthenticated, isAttendant, idNumber, isVisitant }) => {
     Downloads: <DownloadsScreen />,
     Departamentos: <DepartamentosScreen />,
     Loja: <LojaScreen />,
-    CompletarFiliacao: <CompletarFiliacaoScreen />,
+    CompletarFiliacao: <CompletarFiliacao />,
     Secretaria: <SecretariaScreen />,
     ControleFiliados: <ControleFiliados />,
     PedidosLoja: <PedidosLojaScreen />,
